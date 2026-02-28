@@ -94,7 +94,56 @@ View Live Demo
 </div>
 </div>
 </section>
+
+<!-- SERVICES SECTION -->
+<section id="services" class="py-20 bg-slate-900/50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Our <span class="text-brand-primary">Services</span></h2>
+<p class="text-slate-400">High quality followers, likes, and views for all major platforms.</p>
 </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700 transition duration-300">
+<div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-orange-400 rounded-full flex items-center justify-center mb-6 text-2xl">
+<i class="fa-brands fa-instagram text-white"></i>
+</div>
+<h3 class="text-xl font-bold mb-2">Instagram</h3>
+<ul class="text-slate-400 space-y-2 mb-6">
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Followers</li>
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Likes</li>
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Views & Reels</li>
+</ul>
+<a href="#" class="text-brand-primary font-semibold hover:underline">View Prices &rarr;</a>
+</div>
+<!-- TikTok -->
+<div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700 transition duration-300">
+<div class="w-14 h-14 bg-black border border-slate-600 rounded-full flex items-center justify-center mb-6 text-2xl">
+<i class="fa-brands fa-tiktok text-white"></i>
+</div>
+<h3 class="text-xl font-bold mb-2">TikTok</h3>
+<ul class="text-slate-400 space-y-2 mb-6">
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Followers</li>
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Likes</li>
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Views</li>
+</ul>
+<a href="#" class="text-brand-primary font-semibold hover:underline">View Prices &rarr;</a>
+</div>
+<!-- YouTube -->
+<div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700 transition duration-300">
+<div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center mb-6 text-2xl">
+<i class="fa-brands fa-youtube text-white"></i>
+</div>
+<h3 class="text-xl font-bold mb-2">YouTube</h3>
+<ul class="text-slate-400 space-y-2 mb-6">
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Subscribers</li>
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Likes</li>
+<li><i class="fa-solid fa-check text-green-400 mr-2"></i> Views</li>
+</ul>
+<a href="#" class="text-brand-primary font-semibold hover:underline">View Prices &rarr;</a>
+</div>
+</div>
+</div>
+</section>
 
 <!-- DASHBOARD PAGE -->
 <div id="dashboard-page" style="display:none;">
@@ -107,7 +156,7 @@ View Live Demo
 </section>
 </div>
 
-<!-- REGISTER MODAL WITH FORM -->
+<!-- REGISTER MODAL -->
 <div id="registerModal" class="hidden">
 <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
 <div class="bg-slate-800 p-8 rounded-2xl w-96 text-center">
@@ -144,16 +193,12 @@ function openModal(id){const m=document.getElementById(id);if(m){m.classList.rem
 function closeModal(id){const m=document.getElementById(id);if(m){m.classList.add('hidden');m.classList.remove('flex');}}
 function showPage(id){const h=document.getElementById('home-page');const d=document.getElementById('dashboard-page');if(id==='home'){if(h)h.style.display='block';if(d)d.style.display='none';}else if(id==='dashboard'){if(h)h.style.display='none';if(d)d.style.display='block';}}
 document.addEventListener('DOMContentLoaded',()=>{
-    // Mobile menu toggle
     const mobileBtn=document.getElementById('mobile-menu-btn');const mobileMenu=document.getElementById('mobile-menu');if(mobileBtn&&mobileMenu){mobileBtn.addEventListener('click',()=>{mobileMenu.classList.toggle('hidden');});}
-    // Show dashboard button
     const dashBtn=document.getElementById('dashBtn');if(dashBtn){dashBtn.classList.remove('hidden');}
-    // Register form demo submit
     const regForm=document.getElementById('registerForm');if(regForm){regForm.addEventListener('submit',e=>{e.preventDefault();alert('Registration submitted! (Demo)');closeModal('registerModal');});}
-    // Login form demo submit
     const loginForm=document.getElementById('loginForm');if(loginForm){loginForm.addEventListener('submit',e=>{e.preventDefault();alert('Login submitted! (Demo)');closeModal('loginModal');});}
 });
 </script>
 
 </body>
-</html>       
+</html>
