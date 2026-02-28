@@ -3,237 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak AI | SMM Panel PRO</title>
+    <title>Deepak AI | India's Best SMM Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .glass-panel { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); }
         .hidden { display: none !important; }
         .gradient-btn { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
-        .gradient-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans overflow-x-hidden">
+<body class="bg-slate-900 text-white font-sans">
 
     <nav class="fixed w-full z-50 glass-panel px-6 py-4 flex justify-between items-center border-b border-slate-800">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.reload()">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
             <i class="fa-solid fa-bolt text-indigo-500 text-2xl"></i>
-            <span class="font-bold text-xl tracking-tight">Deepak<span class="text-indigo-500">AI</span></span>
+            <span class="font-bold text-xl tracking-tight text-white">Deepak<span class="text-indigo-500">AI</span></span>
         </div>
         
-        <div id="auth-section" class="flex gap-4">
-            <button onclick="openModal('loginModal')" class="text-sm font-medium hover:text-indigo-400">Log In</button>
-            <button onclick="openModal('registerModal')" class="gradient-btn px-5 py-2 rounded-full text-sm font-bold">Get Started</button>
-        </div>
-
-        <div id="user-section" class="hidden flex items-center gap-4">
-            <div class="text-right hidden sm:block">
-                <p id="user-display-name" class="text-sm font-bold leading-none"></p>
-                <p id="user-display-balance" class="text-xs text-green-400 font-bold"></p>
+        <div id="user-nav" class="hidden flex items-center gap-6">
+            <div class="text-right">
+                <p id="nav-balance" class="text-green-400 font-bold text-lg">₹0.00</p>
             </div>
-            <button onclick="logout()" class="bg-red-500/20 text-red-400 text-xs px-3 py-2 rounded-lg border border-red-500/30">Logout</button>
+            <button onclick="logout()" class="text-xs bg-red-500/20 text-red-400 px-3 py-2 rounded-lg border border-red-500/30">Logout</button>
         </div>
     </nav>
 
-    <main class="pt-32 pb-20 px-4">
+    <main class="pt-28 pb-20 px-4 max-w-6xl mx-auto">
         
-        <div id="home-page" class="max-w-4xl mx-auto text-center">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Fastest SMM <br><span class="text-indigo-500 underline">Panel Services</span></h1>
-            <p class="text-slate-400 text-lg mb-8">Register now and get $100 Demo Credits instantly in your wallet!</p>
-            <div class="flex justify-center gap-4">
-                <button onclick="openModal('registerModal')" class="gradient-btn px-8 py-4 rounded-xl font-bold text-lg">Create Free Account</button>
-            </div>
+        <div id="home-page" class="text-center py-20">
+            <h1 class="text-6xl font-black mb-6">Sasta & Best <br><span class="text-indigo-500 italic">SMM Services</span></h1>
+            <p class="text-slate-400 text-xl mb-10">Instagram, YouTube, Facebook - Sab Kuch Ek Hi Jagah!</p>
+            <button onclick="document.getElementById('registerModal').classList.remove('hidden')" class="gradient-btn px-12 py-5 rounded-full font-black text-xl shadow-xl shadow-indigo-500/20">Get Started Now</button>
         </div>
 
-        <div id="dashboard-page" class="hidden max-w-5xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 text-center">
-                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
-                    <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">Balance</p>
-                    <h2 id="dash-balance" class="text-4xl font-black text-indigo-400">$0.00</h2>
-                </div>
-                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
-                    <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">Total Orders</p>
-                    <h2 id="dash-orders" class="text-4xl font-black">0</h2>
-                </div>
-                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
-                    <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">Status</p>
-                    <h2 class="text-4xl font-black text-green-500 italic">Active</h2>
-                </div>
+        <div id="dashboard-page" class="hidden">
+            <div class="flex gap-8 border-b border-slate-800 mb-8 overflow-x-auto no-scrollbar">
+                <button onclick="switchTab('order-tab')" id="btn-order" class="pb-4 active-tab text-lg">New Order</button>
+                <button onclick="switchTab('funds-tab')" id="btn-funds" class="pb-4 text-slate-400 text-lg">Add Funds (QR)</button>
+                <button onclick="switchTab('history-tab')" id="btn-history" class="pb-4 text-slate-400 text-lg">My Orders</button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-cart-plus text-indigo-500"></i> New Order</h3>
-                    <div class="space-y-4">
+            <div id="order-tab" class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-6">Place New Order</h3>
+                    <div class="space-y-5">
                         <div>
-                            <label class="text-xs font-bold text-slate-500 mb-1 block">PLATFORM SERVICE</label>
-                            <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none focus:border-indigo-500">
-                                <option value="Instagram Followers" data-price="0.50">Instagram Followers ($0.50 / 1k)</option>
-                                <option value="YouTube Subscribers" data-price="5.00">YouTube Subscribers ($5.00 / 1k)</option>
-                                <option value="TikTok Views" data-price="0.10">TikTok Views ($0.10 / 1k)</option>
+                            <label class="text-xs font-bold text-slate-500 mb-2 block uppercase">Select Service</label>
+                            <select id="main-service" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl outline-none focus:border-indigo-500 text-lg">
+                                <optgroup label="INSTAGRAM">
+                                    <option value="IG Followers" data-price="80">Instagram Followers (Premium) - ₹80/1k</option>
+                                    <option value="IG Likes" data-price="15">Instagram Likes (Instant) - ₹15/1k</option>
+                                    <option value="IG Reels Views" data-price="5">Instagram Reels Views - ₹5/1k</option>
+                                </optgroup>
+                                <optgroup label="YOUTUBE">
+                                    <option value="YT Subscribers" data-price="1200">YouTube Subscribers - ₹1200/1k</option>
+                                    <option value="YT Watch Time" data-price="1500">YouTube 4000h Watchtime - ₹1500/1k</option>
+                                    <option value="YT Video Likes" data-price="90">YouTube Video Likes - ₹90/1k</option>
+                                    <option value="YT Views" data-price="110">YouTube High Retention Views - ₹110/1k</option>
+                                </optgroup>
+                                <optgroup label="OTHER SERVICES">
+                                    <option value="FB Page Likes" data-price="250">Facebook Page Likes - ₹250/1k</option>
+                                    <option value="Tele Members" data-price="180">Telegram Members - ₹180/1k</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div>
-                            <label class="text-xs font-bold text-slate-500 mb-1 block">TARGET LINK</label>
-                            <input id="srv-link" type="url" placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none focus:border-indigo-500">
+                            <label class="text-xs font-bold text-slate-500 mb-2 block uppercase">Link</label>
+                            <input id="order-url" type="url" placeholder="Paste Profile or Video Link here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl outline-none">
                         </div>
                         <div>
-                            <label class="text-xs font-bold text-slate-500 mb-1 block">QUANTITY (Min: 100)</label>
-                            <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none focus:border-indigo-500">
+                            <label class="text-xs font-bold text-slate-500 mb-2 block uppercase">Quantity (Minimum: 100)</label>
+                            <input id="order-amount" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl outline-none">
                         </div>
-                        <button onclick="placeOrderNow()" class="w-full gradient-btn py-4 rounded-xl font-black text-lg shadow-lg shadow-indigo-500/20">PLACE ORDER</button>
+                        <div class="bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/20">
+                            <p class="text-sm text-slate-400">Total Price: <span id="calc-price" class="text-white font-black text-xl ml-2">₹80.00</span></p>
+                        </div>
+                        <button onclick="submitOrder()" class="w-full gradient-btn py-5 rounded-2xl font-black text-xl shadow-lg">CONFIRM ORDER</button>
                     </div>
                 </div>
+                <div class="hidden lg:block">
+                    <img src="https://img.freepik.com/free-vector/digital-marketing-agency-concept-illustration_114360-15431.jpg" class="rounded-3xl opacity-50">
+                </div>
+            </div>
 
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <h3 class="text-2xl font-bold mb-6 italic">Recent Activity</h3>
-                    <div id="order-history" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
-                        <p class="text-slate-500 text-center py-10">No orders yet. Boost your profile now!</p>
-                    </div>
+            <div id="funds-tab" class="hidden max-w-2xl mx-auto bg-slate-800 p-10 rounded-3xl border border-slate-700 text-center">
+                <h3 class="text-3xl font-black mb-4">Add Funds via UPI</h3>
+                <p class="text-slate-400 mb-8">Scan this QR and pay, then message us on WhatsApp for balance add.</p>
+                
+                <div class="bg-white p-4 inline-block rounded-2xl mb-8">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="My QR Code" class="w-64 h-64">
                 </div>
+                
+                <div class="grid grid-cols-1 gap-4 text-left">
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+                        <p class="text-xs text-slate-500">Transaction ID (After Payment)</p>
+                        <input type="text" placeholder="Enter UTR / Transaction ID" class="w-full bg-transparent outline-none pt-1">
+                    </div>
+                    <button class="bg-green-600 hover:bg-green-500 py-4 rounded-xl font-bold flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i> Send Screenshot on WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <div id="history-tab" class="hidden">
+                <div id="order-list" class="space-y-4">
+                    </div>
             </div>
         </div>
     </main>
 
-    <div id="loginModal" class="fixed inset-0 bg-black/90 hidden z-[100] flex items-center justify-center p-6">
-        <div class="bg-slate-800 p-8 rounded-3xl w-full max-w-sm border border-slate-700">
-            <h2 class="text-3xl font-black mb-6">Welcome Back</h2>
-            <input id="l-email" type="email" placeholder="Email" class="w-full bg-slate-900 p-4 rounded-xl mb-3 border border-slate-700">
-            <input id="l-pass" type="password" placeholder="Password" class="w-full bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
-            <button onclick="login()" class="w-full gradient-btn py-4 rounded-xl font-bold">Login</button>
-            <button onclick="closeModal('loginModal')" class="w-full mt-4 text-slate-500 text-sm">Cancel</button>
-        </div>
-    </div>
-
-    <div id="registerModal" class="fixed inset-0 bg-black/90 hidden z-[100] flex items-center justify-center p-6">
-        <div class="bg-slate-800 p-8 rounded-3xl w-full max-w-sm border border-slate-700">
-            <h2 class="text-3xl font-black mb-2">Join Us</h2>
-            <p class="text-slate-400 mb-6 text-sm">Get $100 free credit on signup.</p>
-            <input id="r-name" type="text" placeholder="Full Name" class="w-full bg-slate-900 p-4 rounded-xl mb-3 border border-slate-700">
-            <input id="r-email" type="email" placeholder="Email Address" class="w-full bg-slate-900 p-4 rounded-xl mb-3 border border-slate-700">
-            <input id="r-pass" type="password" placeholder="Create Password" class="w-full bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
-            <button onclick="register()" class="w-full gradient-btn py-4 rounded-xl font-bold">Register & Claim $100</button>
-            <button onclick="closeModal('registerModal')" class="w-full mt-4 text-slate-500 text-sm">Cancel</button>
+    <div id="registerModal" class="fixed inset-0 bg-black/90 hidden z-[100] flex items-center justify-center">
+        <div class="bg-slate-800 p-8 rounded-3xl w-80 text-center border border-slate-700">
+            <h2 class="text-2xl font-bold mb-4">Create Account</h2>
+            <input id="r-name" type="text" placeholder="Full Name" class="w-full bg-slate-900 p-3 rounded-lg mb-2">
+            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-900 p-3 rounded-lg mb-2">
+            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-900 p-3 rounded-lg mb-4">
+            <button onclick="handleReg()" class="w-full gradient-btn py-3 rounded-lg font-bold">Sign Up & Get ₹500 Bonus</button>
         </div>
     </div>
 
     <script>
-        // --- DATA ENGINE ---
-        let users = JSON.parse(localStorage.getItem('smm_users')) || [];
-        let session = JSON.parse(localStorage.getItem('smm_session')) || null;
+        let users = JSON.parse(localStorage.getItem('sm_users')) || [];
+        let session = JSON.parse(localStorage.getItem('sm_session')) || null;
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        // Price Auto-Calculator
+        const srvSelect = document.getElementById('main-service');
+        const qtyInput = document.getElementById('order-amount');
+        const priceDisplay = document.getElementById('calc-price');
 
-        // 1. REGISTER FUNCTION
-        function register() {
+        function updatePrice() {
+            const pricePerK = parseFloat(srvSelect.options[srvSelect.selectedIndex].dataset.price);
+            const total = (qtyInput.value / 1000) * pricePerK;
+            priceDisplay.innerText = "₹" + total.toFixed(2);
+        }
+        srvSelect.onchange = updatePrice;
+        qtyInput.oninput = updatePrice;
+
+        // Register
+        function handleReg() {
             const name = document.getElementById('r-name').value;
             const email = document.getElementById('r-email').value;
             const pass = document.getElementById('r-pass').value;
+            if(!name || !email || !pass) return;
 
-            if(!name || !email || !pass) return alert("All fields are required!");
-
-            // Check if user exists
-            if(users.find(u => u.email === email)) return alert("Email already registered!");
-
-            const newUser = { name, email, pass, balance: 100.00, orders: [] };
+            const newUser = { name, email, pass, balance: 500.00, orders: [] };
             users.push(newUser);
-            localStorage.setItem('smm_users', JSON.stringify(users));
-            
-            // Auto login
+            localStorage.setItem('sm_users', JSON.stringify(users));
             session = newUser;
-            localStorage.setItem('smm_session', JSON.stringify(session));
-            
-            alert("Account Created! You got $100 Welcome Bonus.");
-            location.reload(); // Refresh to start session
-        }
-
-        // 2. LOGIN FUNCTION
-        function login() {
-            const email = document.getElementById('l-email').value;
-            const pass = document.getElementById('l-pass').value;
-
-            const user = users.find(u => u.email === email && u.pass === pass);
-            if(user) {
-                session = user;
-                localStorage.setItem('smm_session', JSON.stringify(session));
-                location.reload();
-            } else {
-                alert("Wrong email or password!");
-            }
-        }
-
-        // 3. LOGOUT
-        function logout() {
-            localStorage.removeItem('smm_session');
+            localStorage.setItem('sm_session', JSON.stringify(session));
             location.reload();
         }
 
-        // 4. PLACE ORDER
-        function placeOrderNow() {
-            const srv = document.getElementById('srv-select');
-            const qty = parseInt(document.getElementById('srv-qty').value);
-            const link = document.getElementById('srv-link').value;
-            const price = parseFloat(srv.options[srv.selectedIndex].dataset.price);
+        // Tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('#dashboard-page > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.querySelectorAll('[id^="btn-"]').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById('btn-' + tabId.split('-')[0]).classList.add('active-tab');
+        }
 
-            if(!link || qty < 100) return alert("Enter valid link and min 100 quantity!");
+        // Logout
+        function logout() { localStorage.removeItem('sm_session'); location.reload(); }
 
-            const cost = (qty / 1000) * price;
+        // Submit Order
+        function submitOrder() {
+            const pricePerK = parseFloat(srvSelect.options[srvSelect.selectedIndex].dataset.price);
+            const cost = (qtyInput.value / 1000) * pricePerK;
 
             if(session.balance >= cost) {
                 session.balance -= cost;
                 const order = {
-                    id: '#' + Math.floor(Math.random()*9000 + 1000),
-                    service: srv.value,
-                    qty: qty,
+                    service: srvSelect.value,
+                    qty: qtyInput.value,
                     cost: cost.toFixed(2),
-                    status: 'Processing'
+                    status: 'Pending',
+                    id: '#' + Math.floor(Math.random()*90000)
                 };
                 session.orders.unshift(order);
-
-                // Update database
-                const idx = users.findIndex(u => u.email === session.email);
-                users[idx] = session;
-                localStorage.setItem('smm_users', JSON.stringify(users));
-                localStorage.setItem('smm_session', JSON.stringify(session));
-
-                renderUI();
-                alert("Order Placed!");
+                save();
+                renderAll();
+                alert("Order Placed! Check History.");
             } else {
-                alert("Insufficient Balance!");
+                alert("Paise kam hain! Add Funds tab mein jaakar balance badhayein.");
             }
         }
 
-        // 5. RENDER UI
-        function renderUI() {
+        function save() {
+            localStorage.setItem('sm_session', JSON.stringify(session));
+            const idx = users.findIndex(u => u.email === session.email);
+            users[idx] = session;
+            localStorage.setItem('sm_users', JSON.stringify(users));
+        }
+
+        function renderAll() {
             if(session) {
                 document.getElementById('home-page').classList.add('hidden');
-                document.getElementById('auth-section').classList.add('hidden');
                 document.getElementById('dashboard-page').classList.remove('hidden');
-                document.getElementById('user-section').classList.remove('hidden');
+                document.getElementById('user-nav').classList.remove('hidden');
+                document.getElementById('nav-balance').innerText = "₹" + session.balance.toFixed(2);
                 
-                document.getElementById('user-display-name').innerText = session.name;
-                document.getElementById('user-display-balance').innerText = "$" + session.balance.toFixed(2);
-                document.getElementById('dash-balance').innerText = "$" + session.balance.toFixed(2);
-                document.getElementById('dash-orders').innerText = session.orders.length;
-
-                const history = document.getElementById('order-history');
-                if(session.orders.length > 0) {
-                    history.innerHTML = session.orders.map(o => `
-                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                const list = document.getElementById('order-list');
+                if(session.orders.length === 0) {
+                    list.innerHTML = "<p class='text-center py-20 text-slate-500'>Abhi koi order nahi hai.</p>";
+                } else {
+                    list.innerHTML = session.orders.map(o => `
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 flex justify-between items-center">
                             <div>
-                                <p class="font-bold text-sm">${o.service} <span class="text-indigo-400 text-xs">${o.id}</span></p>
-                                <p class="text-xs text-slate-500">Qty: ${o.qty} | Cost: $${o.cost}</p>
+                                <p class="font-bold">${o.service} <span class="text-xs text-indigo-400">${o.id}</span></p>
+                                <p class="text-xs text-slate-500">Qty: ${o.qty} | Cost: ₹${o.cost}</p>
                             </div>
-                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-indigo-500/20 text-indigo-400 uppercase">${o.status}</span>
+                            <span class="text-[10px] bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded-full font-bold">${o.status}</span>
                         </div>
                     `).join('');
                 }
             }
         }
 
-        // Run UI on load
-        renderUI();
+        renderAll();
+        updatePrice();
     </script>
 </body>
 </html>
