@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak SMM | Premium Panel</title>
+    <title>Deepak SMM | Professional Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
         .btn-grad { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
-        .btn-grad:hover { opacity: 0.9; transform: scale(1.02); }
         .hidden { display: none !important; }
         .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
+        /* Animation for Order */
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .processing { animation: pulse 1.5s infinite; color: #fbbf24; }
     </style>
 </head>
 <body>
@@ -20,11 +22,11 @@
     <nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-slate-800">
         <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
             <i class="fa-solid fa-bolt text-indigo-500 text-2xl"></i>
-            <span class="font-bold text-xl uppercase tracking-tighter">Deepak<span class="text-indigo-500">SMM</span></span>
+            <span class="font-bold text-xl uppercase tracking-tighter text-white">Deepak<span class="text-indigo-500">SMM</span></span>
         </div>
         <div id="user-info" class="hidden flex items-center gap-4">
             <span id="top-balance" class="bg-indigo-500/10 px-3 py-1 rounded-full text-green-400 font-bold border border-green-500/20">₹0.00</span>
-            <button onclick="logout()" class="text-slate-400 text-xs hover:text-red-400"><i class="fa-solid fa-power-off"></i></button>
+            <button onclick="logout()" class="text-slate-400 hover:text-red-400"><i class="fa-solid fa-power-off"></i></button>
         </div>
     </nav>
 
@@ -32,10 +34,10 @@
         
         <div id="home-view" class="text-center py-20">
             <h1 class="text-5xl md:text-7xl font-black mb-6 italic">Deepak <span class="text-indigo-500">SMM</span></h1>
-            <p class="text-slate-400 mb-10 text-lg">High Quality Followers, Likes & Views at Best Prices.</p>
+            <p class="text-slate-400 mb-10 text-lg">Instant Delivery. Real Quality. Premium Support.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl shadow-xl">Get Started (Free Account)</button>
-                <button onclick="window.open('https://wa.me/919250996142')" class="bg-slate-800 border border-slate-700 px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-700">Contact Admin</button>
+                <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl shadow-xl">Get Started</button>
+                <button onclick="window.open('https://wa.me/919250996142', '_blank')" class="bg-slate-800 border border-slate-700 px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-700">Contact Admin</button>
             </div>
         </div>
 
@@ -67,55 +69,58 @@
                             <span class="text-slate-400">Total Price:</span>
                             <span id="final-cost" class="text-2xl font-black text-white">₹45.00</span>
                         </div>
-                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg shadow-lg">CONFIRM ORDER</button>
+                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg">CONFIRM ORDER</button>
                     </div>
+                </div>
+                <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10">
+                    <h3 class="font-bold text-indigo-400 mb-2">Live Status</h3>
+                    <p class="text-xs text-slate-500">Orders are processing normally. Current Speed: 10k/hr.</p>
                 </div>
             </div>
 
             <div id="section-add-funds" class="hidden text-center max-w-lg mx-auto glass p-10 rounded-[2.5rem]">
-                <h2 class="text-2xl font-black mb-2">QR SCANNER</h2>
-                <p class="text-slate-500 text-xs mb-8 uppercase tracking-widest">Scan to Add Money</p>
+                <h2 class="text-2xl font-black mb-2">SCANNER</h2>
                 <div class="bg-white p-4 inline-block rounded-2xl mb-8">
                     <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-64 h-64">
                 </div>
-                <input id="utr-input" type="text" placeholder="Enter Transaction ID / UTR" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center">
-                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white hover:bg-green-500">
-                    <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> SUBMIT TO ADMIN
+                <input id="utr-input" type="text" placeholder="Enter Transaction ID" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center">
+                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">
+                    <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> SUBMIT PROOF
                 </button>
+                <p class="text-[10px] text-slate-600 mt-4 underline cursor-pointer" onclick="switchTab('new-order')">Go Back to Dashboard</p>
             </div>
 
             <div id="section-history" class="hidden space-y-4">
+                <h2 class="text-xl font-bold mb-4">Your Recent Orders</h2>
                 <div id="history-list"></div>
             </div>
         </div>
     </main>
 
-    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[100] hidden flex items-center justify-center p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500">
-            <h2 class="text-3xl font-black text-indigo-400 mb-6 italic">ADMIN MOD</h2>
+    <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-6">Create Account</h2>
+            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
+            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
+            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none">
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register Now</button>
+            <button onclick="document.getElementById('reg-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Cancel</button>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[101] hidden flex items-center justify-center p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500 shadow-2xl">
+            <h2 class="text-2xl font-black text-indigo-400 mb-6">ADMIN PANEL</h2>
             <div class="space-y-4">
-                <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-900 p-4 rounded-xl outline-none border border-slate-700">
-                <input id="adm-amt" type="number" placeholder="Add Balance (₹)" class="w-full bg-slate-900 p-4 rounded-xl outline-none border border-slate-700">
-                <button onclick="adminAdd()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold">ACTIVATE FUNDS</button>
-                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full text-slate-500 mt-2">Exit Admin</button>
+                <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
+                <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
+                <button onclick="adminAdd()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold">ADD BALANCE</button>
+                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Close</button>
             </div>
         </div>
     </div>
 
-    <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-center justify-center p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border border-slate-800">
-            <h2 class="text-3xl font-bold mb-2">Create Account</h2>
-            <p class="text-slate-500 mb-8 text-sm italic italic">Note: Initial Balance will be ₹0.</p>
-            <input id="r-name" type="text" placeholder="Full Name" class="w-full bg-slate-900 p-4 rounded-xl mb-4 outline-none border border-slate-700">
-            <input id="r-email" type="email" placeholder="Email Address" class="w-full bg-slate-900 p-4 rounded-xl mb-4 outline-none border border-slate-700">
-            <input id="r-pass" type="password" placeholder="Set Password" class="w-full bg-slate-900 p-4 rounded-xl mb-8 outline-none border border-slate-700">
-            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-black text-xl">REGISTER NOW</button>
-        </div>
-    </div>
-
-    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 hover:text-indigo-500 cursor-pointer opacity-30 text-xl">
-        <i class="fa-solid fa-gear"></i>
-    </div>
+    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl"><i class="fa-solid fa-gear"></i></div>
 
     <script>
         let users = JSON.parse(localStorage.getItem('deepak_users')) || [];
@@ -124,8 +129,6 @@
         function registerUser() {
             const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
             if(!n || !e || !p) return alert("Pehle sab bhariye!");
-            if(users.find(u => u.email === e)) return alert("Email already exists!");
-            
             const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
             users.push(u);
             localStorage.setItem('deepak_users', JSON.stringify(users));
@@ -152,12 +155,33 @@
         function placeOrder() {
             const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
             const cost = (document.getElementById('srv-qty').value / 1000) * r;
-            if(!document.getElementById('srv-url').value) return alert("Link kahan hai?");
+            const url = document.getElementById('srv-url').value;
+            
+            if(!url) return alert("Link kahan hai?");
             if(session.balance >= cost) {
                 session.balance -= cost;
-                session.orders.unshift({ srv: document.getElementById('srv-select').value, qty: document.getElementById('srv-qty').value, cost: cost.toFixed(2), status: 'Processing' });
-                sync(); render(); alert("Order Successful!");
-            } else { alert("Paisa nahi hai! Recharge karo."); switchTab('add-funds'); }
+                const newOrder = { 
+                    id: Math.floor(Math.random()*99999),
+                    srv: document.getElementById('srv-select').value, 
+                    qty: document.getElementById('srv-qty').value, 
+                    cost: cost.toFixed(2), 
+                    status: 'Processing' 
+                };
+                session.orders.unshift(newOrder);
+                sync(); render(); 
+                
+                alert("Order Lag gaya! 2 minute mein followers badhne shuru ho jayenge.");
+                
+                // Fake Simulation Logic
+                setTimeout(() => {
+                    newOrder.status = "Completed";
+                    sync(); render();
+                }, 15000); // 15 seconds baad Completed ho jayega
+
+            } else { 
+                alert("Paise kam hain! QR Scan karke recharge karein."); 
+                switchTab('add-funds');
+            }
         }
 
         function openAdmin() { if(prompt("Pass?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
@@ -169,15 +193,16 @@
                 users[idx].balance += amt;
                 localStorage.setItem('deepak_users', JSON.stringify(users));
                 if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                alert("Done!"); render();
-            } else { alert("User Not Found!"); }
+                alert("Paisa Add ho gaya!"); render();
+            } else { alert("User nahi mila!"); }
         }
 
         function whatsappPay() {
             const utr = document.getElementById('utr-input').value;
-            const phone = "919250996142"; // YOUR SET PHONE NUMBER
             if(!utr) return alert("UTR ID daaliye!");
-            window.open(`https://wa.me/${phone}?text=Hi, Payment Done!%0AEmail: ${session.email}%0AUTR: ${utr}`, '_blank');
+            const phone = "919250996142";
+            const msg = `Payment Done!%0AEmail: ${session.email}%0AUTR: ${utr}`;
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
         }
 
         function sync() {
@@ -194,11 +219,11 @@
                 document.getElementById('user-info').classList.remove('hidden');
                 document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
                 document.getElementById('history-list').innerHTML = session.orders.map(o => `
-                    <div class="glass p-4 rounded-2xl flex justify-between mb-2">
-                        <div><p class="font-bold">${o.srv}</p><p class="text-xs text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
-                        <span class="text-xs text-indigo-400 font-bold uppercase">${o.status}</span>
+                    <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
+                        <div><p class="font-bold text-white text-sm">${o.srv}</p><p class="text-[10px] text-slate-500 uppercase tracking-widest">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                        <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
                     </div>
-                `).join('') || "<p class='text-center py-10'>No Orders.</p>";
+                `).join('') || "<p class='text-center py-20 text-slate-600'>No Orders Yet.</p>";
             }
         }
         render(); calcPrice();
