@@ -3,84 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deepak AI SMM Panel | Launch Demo</title>
+<title>Deepak AI SMM Panel | Best Social Media Marketing Services</title>
+
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    brand: {
+                        dark: '#0f172a',
+                        primary: '#6366f1',
+                        accent: '#ec4899',
+                    }
+                },
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                }
+            }
+        }
+    }
+</script>
+
 <style>
-body {font-family:'Inter',sans-serif;}
-.gradient-text{background:linear-gradient(to right,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.glass-panel{background:rgba(30,41,59,0.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);}
-.service-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px -5px rgba(99,102,241,0.4);}
-.hidden{display:none;}
-.flex{display:flex;justify-content:center;align-items:center;}
+.gradient-text{
+    background: linear-gradient(to right, #6366f1, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.glass-panel{
+    background: rgba(30,41,59,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.service-card:hover{
+    transform: translateY(-5px);
+    box-shadow:0 10px 25px -5px rgba(99,102,241,0.4);
+}
+.no-scrollbar::-webkit-scrollbar{
+    display:none;
+}
+.modal{
+    position: fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:50;
+}
+.modal-content{
+    background:#1e293b;
+    padding:2rem;
+    border-radius:1rem;
+    max-width:400px;
+    width:90%;
+}
 </style>
 </head>
-<body class="bg-slate-900 text-white overflow-x-hidden">
+<body class="bg-slate-900 text-white font-sans antialiased overflow-x-hidden">
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <nav class="fixed w-full z-50 glass-panel border-b border-slate-700">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
-<i class="fa-solid fa-bolt text-purple-500 text-2xl"></i>
-<span class="font-bold text-xl tracking-wide">Deepak<span class="text-purple-500">AI</span></span>
+<i class="fa-solid fa-bolt text-brand-primary text-2xl"></i>
+<span class="font-bold text-xl tracking-wide">Deepak<span class="text-brand-primary">AI</span></span>
 </div>
+
 <div class="hidden md:flex space-x-8 items-center">
-<a href="#" onclick="showPage('home')" class="hover:text-purple-500">Home</a>
-<a href="#services" onclick="showPage('home')" class="hover:text-purple-500">Services</a>
-<a href="#pricing" onclick="showPage('home')" class="hover:text-purple-500">API</a>
-<a href="#contact" onclick="showPage('home')" class="hover:text-purple-500">Support</a>
+<a href="#" onclick="showPage('home')" class="hover:text-brand-primary transition">Home</a>
+<a href="#services" onclick="showPage('home')" class="hover:text-brand-primary transition">Services</a>
+<a href="#pricing" onclick="showPage('home')" class="hover:text-brand-primary transition">API</a>
+<a href="#contact" onclick="showPage('home')" class="hover:text-brand-primary transition">Support</a>
 </div>
+
 <div class="hidden md:flex items-center space-x-4">
-<button onclick="openModal('loginModal')" class="text-sm font-semibold hover:text-purple-500">Log In</button>
-<button onclick="openModal('registerModal')" class="bg-purple-500 hover:bg-indigo-600 px-5 py-2 rounded-full text-sm font-semibold">Register</button>
-<button onclick="showPage('dashboard')" id="dashBtn" class="hidden bg-slate-800 hover:bg-slate-700 border px-4 py-2 rounded-lg text-sm"><i class="fa-solid fa-user-circle mr-2"></i> Dashboard</button>
+<button onclick="openModal('loginModal')" class="text-sm font-semibold hover:text-brand-primary">Log In</button>
+<button onclick="openModal('registerModal')" class="bg-brand-primary hover:bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-lg shadow-indigo-500/30">
+Register
+</button>
+<button onclick="showPage('dashboard')" id="dashBtn" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-600 px-4 py-2 rounded-lg text-sm">
+<i class="fa-solid fa-user-circle mr-2"></i> Dashboard
+</button>
 </div>
+
 <div class="md:hidden flex items-center">
-<button id="mobile-menu-btn" class="text-gray-300 hover:text-white"><i class="fa-solid fa-bars text-2xl"></i></button>
+<button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+<i class="fa-solid fa-bars text-2xl"></i>
+</button>
 </div>
 </div>
+</div>
+
 <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700">
 <a href="#" onclick="showPage('home')" class="block px-4 py-3 hover:bg-slate-700">Home</a>
 <a href="#services" class="block px-4 py-3 hover:bg-slate-700">Services</a>
 <a href="#pricing" class="block px-4 py-3 hover:bg-slate-700">API & Pricing</a>
 <div class="border-t border-slate-700 pt-4 pb-2 px-4">
 <button onclick="openModal('loginModal')" class="block w-full text-left py-2">Log In</button>
-<button onclick="openModal('registerModal')" class="block w-full text-left py-2 text-purple-500 font-bold">Register</button>
+<button onclick="openModal('registerModal')" class="block w-full text-left py-2 text-brand-primary font-bold">Register</button>
 </div>
 </div>
 </nav>
 
-<!-- HOME -->
-<div id="home-page" class="pt-32">
-<section class="text-center max-w-7xl mx-auto px-4">
-<h1 class="text-5xl md:text-6xl font-bold mb-6">Boost Your Social Media <br><span class="gradient-text">Instantly with Deepak AI</span></h1>
-<p class="text-slate-400 mb-10">The #1 SMM Panel for Resellers and Individual creators. Automated services, cheap prices, and 24/7 support.</p>
+<!-- HOME PAGE -->
+<div id="home-page">
+<section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+Boost Your Social Media <br>
+<span class="gradient-text">Instantly with Deepak AI</span>
+</h1>
+<p class="text-slate-400 text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+The #1 SMM Panel for Resellers and Individual creators. Automated services, cheap prices, and 24/7 support.
+</p>
 <div class="flex flex-col sm:flex-row justify-center gap-4">
-<button onclick="openModal('registerModal')" class="bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-4 rounded-full font-bold text-lg">Get Started Now</button>
-<button onclick="showPage('dashboard')" class="glass-panel px-8 py-4 rounded-full font-bold text-lg border">View Live Demo</button>
-</div>
-</section>
-
-<section id="services" class="py-20">
-<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700">
-<h3 class="text-xl font-bold mb-2">Instagram</h3>
-<ul class="text-slate-400 space-y-2 mb-6">
-<li>Followers</li><li>Likes</li><li>Views & Reels</li>
-</ul>
-</div>
-<div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700">
-<h3 class="text-xl font-bold mb-2">TikTok</h3>
-<ul class="text-slate-400 space-y-2 mb-6">
-<li>Followers</li><li>Likes</li><li>Views</li>
-</ul>
-</div>
-<div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700">
-<h3 class="text-xl font-bold mb-2">YouTube</h3>
-<ul class="text-slate-400 space-y-2 mb-6">
-<li>Subscribers</li><li>Likes</li><li>Views</li>
-</ul>
+<button onclick="openModal('registerModal')" class="bg-gradient-to-r from-brand-primary to-purple-600 hover:from-indigo-600 hover:to-purple-700 px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-indigo-500/40 transition transform hover:scale-105">
+Get Started Now
+</button>
+<button onclick="showPage('dashboard')" class="glass-panel hover:bg-slate-800 px-8 py-4 rounded-full font-bold text-lg transition border border-slate-600">
+View Live Demo
+</button>
 </div>
 </div>
 </section>
@@ -88,52 +141,87 @@ body {font-family:'Inter',sans-serif;}
 
 <!-- DASHBOARD -->
 <div id="dashboard-page" class="hidden pt-32 text-center max-w-7xl mx-auto px-4">
-<h1 class="text-5xl font-bold mb-6">Dashboard Demo</h1>
-<p class="text-slate-400 mb-10">This is a demo dashboard page.</p>
+<h1 class="text-5xl font-bold mb-6">Dashboard</h1>
+<p class="text-slate-400 mb-10" id="welcomeMsg"></p>
 <button onclick="showPage('home')" class="bg-purple-500 px-6 py-3 rounded-full font-bold hover:bg-indigo-600">Back to Home</button>
 </div>
 
-<!-- REGISTER MODAL -->
-<div id="registerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-<div class="bg-slate-800 p-8 rounded-2xl w-96 text-center">
+<!-- MODALS -->
+<div id="registerModal" class="modal">
+<div class="modal-content">
 <h2 class="text-2xl font-bold mb-4">Register</h2>
-<form id="registerForm" class="space-y-4">
-<input type="text" placeholder="Full Name" class="w-full px-4 py-2 rounded-lg bg-slate-900 border text-white" required>
-<input type="email" placeholder="Email" class="w-full px-4 py-2 rounded-lg bg-slate-900 border text-white" required>
-<input type="password" placeholder="Password" class="w-full px-4 py-2 rounded-lg bg-slate-900 border text-white" required>
-<button type="submit" class="w-full bg-purple-500 px-4 py-2 rounded-full font-bold text-lg">Register</button>
+<form id="registerForm" class="flex flex-col gap-4">
+<input type="text" placeholder="Name" required class="p-3 rounded bg-slate-700 border border-slate-600">
+<input type="email" placeholder="Email" required class="p-3 rounded bg-slate-700 border border-slate-600">
+<input type="password" placeholder="Password" required class="p-3 rounded bg-slate-700 border border-slate-600">
+<button type="submit" class="bg-brand-primary px-4 py-3 rounded text-white font-bold hover:bg-indigo-600">Register</button>
+<button type="button" onclick="closeModal('registerModal')" class="mt-2 text-sm text-slate-400 hover:text-white">Cancel</button>
 </form>
-<button onclick="closeModal('registerModal')" class="mt-4 w-full bg-slate-700 px-4 py-2 rounded-full font-bold">Close</button>
 </div>
 </div>
 
-<!-- LOGIN MODAL -->
-<div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-<div class="bg-slate-800 p-8 rounded-2xl w-96 text-center">
-<h2 class="text-2xl font-bold mb-4">Log In</h2>
-<form id="loginForm" class="space-y-4">
-<input type="email" placeholder="Email" class="w-full px-4 py-2 rounded-lg bg-slate-900 border text-white" required>
-<input type="password" placeholder="Password" class="w-full px-4 py-2 rounded-lg bg-slate-900 border text-white" required>
-<button type="submit" class="w-full bg-purple-500 px-4 py-2 rounded-full font-bold text-lg">Log In</button>
+<div id="loginModal" class="modal">
+<div class="modal-content">
+<h2 class="text-2xl font-bold mb-4">Login</h2>
+<form id="loginForm" class="flex flex-col gap-4">
+<input type="email" placeholder="Email" required class="p-3 rounded bg-slate-700 border border-slate-600">
+<input type="password" placeholder="Password" required class="p-3 rounded bg-slate-700 border border-slate-600">
+<button type="submit" class="bg-brand-primary px-4 py-3 rounded text-white font-bold hover:bg-indigo-600">Login</button>
+<button type="button" onclick="closeModal('loginModal')" class="mt-2 text-sm text-slate-400 hover:text-white">Cancel</button>
 </form>
-<button onclick="closeModal('loginModal')" class="mt-4 w-full bg-slate-700 px-4 py-2 rounded-full font-bold">Close</button>
 </div>
 </div>
 
 <script>
-function openModal(id){document.getElementById(id).classList.remove('hidden');document.getElementById(id).classList.add('flex');}
-function closeModal(id){document.getElementById(id).classList.add('hidden');document.getElementById(id).classList.remove('flex');}
+// MODAL FUNCTIONS
+function openModal(id){document.getElementById(id).style.display='flex'}
+function closeModal(id){document.getElementById(id).style.display='none'}
+
+// SHOW PAGES
 function showPage(id){
-let h=document.getElementById('home-page');
-let d=document.getElementById('dashboard-page');
-if(id==='home'){h.style.display='block';d.style.display='none';}
-else if(id==='dashboard'){h.style.display='none';d.style.display='block';}
+    const home=document.getElementById('home-page');
+    const dash=document.getElementById('dashboard-page');
+    if(id==='home'){home.style.display='block'; dash.style.display='none';}
+    else if(id==='dashboard'){
+        home.style.display='none'; dash.style.display='block';
+        const name=localStorage.getItem('userName')||'User';
+        document.getElementById('welcomeMsg').innerText=`Welcome, ${name}! This is your dashboard.`;
+    }
 }
-document.addEventListener('DOMContentLoaded',()=>{
-document.getElementById('mobile-menu-btn')?.addEventListener('click',()=>{document.getElementById('mobile-menu').classList.toggle('hidden');});
-document.getElementById('dashBtn')?.classList.remove('hidden');
-document.getElementById('registerForm')?.addEventListener('submit',e=>{e.preventDefault();alert('Registration submitted! (Demo)');closeModal('registerModal');});
-document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();alert('Login submitted! (Demo)');closeModal('loginModal');});
+
+// MOBILE MENU
+document.getElementById('mobile-menu-btn')?.addEventListener('click',()=>{
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+
+// REGISTER
+document.getElementById('registerForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=e.target[0].value;
+    const email=e.target[1].value;
+    const pass=e.target[2].value;
+    localStorage.setItem('userName',name);
+    localStorage.setItem('userEmail',email);
+    localStorage.setItem('userPass',pass);
+    alert(`Welcome ${name}, registration successful!`);
+    closeModal('registerModal');
+    showPage('dashboard');
+    document.getElementById('dashBtn').classList.remove('hidden');
+});
+
+// LOGIN
+document.getElementById('loginForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const email=e.target[0].value;
+    const pass=e.target[1].value;
+    const storedEmail=localStorage.getItem('userEmail');
+    const storedPass=localStorage.getItem('userPass');
+    if(email===storedEmail && pass===storedPass){
+        alert(`Welcome back!`);
+        closeModal('loginModal');
+        showPage('dashboard');
+        document.getElementById('dashBtn').classList.remove('hidden');
+    }else alert('Invalid credentials!');
 });
 </script>
 </body>
