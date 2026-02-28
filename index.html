@@ -3,243 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak AI | India's Cheapest SMM Panel</title>
+    <title>Deepak SMM | Premium Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #0b0f1a; }
-        .glass-card { background: rgba(23, 32, 53, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
-        .gradient-text { background: linear-gradient(90deg, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-main { background: linear-gradient(90deg, #6366f1, #a855f7); transition: 0.3s; }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -10px #6366f1; }
+        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-grad { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
+        .btn-grad:hover { opacity: 0.9; transform: scale(1.02); }
         .hidden { display: none !important; }
+        .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
     </style>
 </head>
-<body class="text-slate-200 font-sans">
+<body>
 
-    <nav class="fixed w-full z-50 border-b border-slate-800 bg-[#0b0f1a]/80 backdrop-blur-md px-6 py-4 flex justify-between items-center">
+    <nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-slate-800">
         <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
-            <div class="w-10 h-10 btn-main rounded-xl flex items-center justify-center shadow-lg">
-                <i class="fa-solid fa-rocket text-white"></i>
-            </div>
-            <span class="text-2xl font-black tracking-tighter text-white">DEEPAK<span class="text-indigo-500">SMM</span></span>
+            <i class="fa-solid fa-bolt text-indigo-500 text-2xl"></i>
+            <span class="font-bold text-xl uppercase tracking-tighter">Deepak<span class="text-indigo-500">SMM</span></span>
         </div>
-        
-        <div id="logged-in-nav" class="hidden flex items-center gap-6">
-            <div class="bg-indigo-500/10 px-4 py-2 rounded-full border border-indigo-500/30">
-                <span class="text-xs text-indigo-300 font-bold uppercase mr-2">Wallet:</span>
-                <span id="nav-bal" class="text-white font-black text-lg">₹0.00</span>
-            </div>
-            <button onclick="logout()" class="text-slate-400 hover:text-white transition"><i class="fa-solid fa-power-off"></i></button>
+        <div id="user-info" class="hidden flex items-center gap-4">
+            <span id="top-balance" class="bg-indigo-500/10 px-3 py-1 rounded-full text-green-400 font-bold border border-green-500/20">₹0.00</span>
+            <button onclick="logout()" class="text-slate-400 text-xs hover:text-red-400"><i class="fa-solid fa-power-off"></i></button>
         </div>
     </nav>
 
     <main class="pt-28 pb-10 px-4 max-w-5xl mx-auto">
         
-        <div id="home-view" class="py-20 text-center">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Social Media <br><span class="gradient-text">Ka King Bano!</span></h1>
-            <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">India's cheapest rates for Instagram, YouTube & TikTok. Real services, 0% drop, instant start.</p>
-            <div class="flex justify-center gap-4">
-                <button onclick="openModal('reg-modal')" class="btn-main px-10 py-4 rounded-2xl font-black text-lg">Start Boosting Now</button>
+        <div id="home-view" class="text-center py-20">
+            <h1 class="text-5xl md:text-7xl font-black mb-6">Real <span class="text-indigo-500">Growth</span> Starts Here</h1>
+            <p class="text-slate-400 mb-10 text-lg">Premium Services at Wholesale Prices. Trusted by 10k+ Users.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl shadow-xl">Register Account</button>
+                <button onclick="window.open('https://wa.me/91XXXXXXXXXX')" class="bg-slate-800 border border-slate-700 px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-700">Contact Admin</button>
             </div>
         </div>
 
         <div id="dash-view" class="hidden">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="glass-card p-5 rounded-3xl">
-                    <p class="text-xs font-bold text-slate-500 mb-1">BALANCE</p>
-                    <h3 id="stat-bal" class="text-2xl font-black text-indigo-400">₹0</h3>
-                </div>
-                <div class="glass-card p-5 rounded-3xl">
-                    <p class="text-xs font-bold text-slate-500 mb-1">TOTAL ORDERS</p>
-                    <h3 id="stat-orders" class="text-2xl font-black">0</h3>
-                </div>
-                <div class="glass-card p-5 rounded-3xl" onclick="switchTab('funds')">
-                    <p class="text-xs font-bold text-indigo-500 mb-1 underline">ADD MONEY</p>
-                    <h3 class="text-2xl font-black">PAYTM/QR</h3>
-                </div>
-                <div class="glass-card p-5 rounded-3xl">
-                    <p class="text-xs font-bold text-slate-500 mb-1">STATUS</p>
-                    <h3 class="text-2xl font-black text-green-500">VIP</h3>
-                </div>
+            <div class="flex gap-8 border-b border-slate-800 mb-8 overflow-x-auto">
+                <button onclick="switchTab('new-order')" id="tab-new-order" class="pb-4 active-tab">New Order</button>
+                <button onclick="switchTab('add-funds')" id="tab-add-funds" class="pb-4 text-slate-500 font-bold">Add Money (QR)</button>
+                <button onclick="switchTab('history')" id="tab-history" class="pb-4 text-slate-500">My Orders</button>
             </div>
 
-            <div class="flex gap-4 mb-8 overflow-x-auto pb-2">
-                <button onclick="switchTab('new-order')" id="tab-btn-new-order" class="bg-indigo-600 px-6 py-3 rounded-xl font-bold whitespace-nowrap">New Order</button>
-                <button onclick="switchTab('funds')" id="tab-btn-funds" class="bg-slate-800 px-6 py-3 rounded-xl font-bold whitespace-nowrap">Add Funds (QR)</button>
-                <button onclick="switchTab('history')" id="tab-btn-history" class="bg-slate-800 px-6 py-3 rounded-xl font-bold whitespace-nowrap">My History</button>
-            </div>
-
-            <div id="new-order-tab" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 glass-card p-8 rounded-[2rem]">
-                    <h2 class="text-2xl font-black mb-6 italic">Create Viral Order</h2>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="text-xs font-black text-slate-500 mb-2 block uppercase tracking-widest">Select Platform</label>
-                            <select id="srv-list" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl outline-none focus:border-indigo-500" onchange="calc()">
-                                <optgroup label="INSTAGRAM (Sasta & Best)">
-                                    <option value="IG Followers" data-rate="25">Instagram Followers (Refill) - ₹25/1k</option>
-                                    <option value="IG Likes" data-rate="8">Instagram Likes (Speed) - ₹8/1k</option>
-                                    <option value="IG Views" data-rate="2">Instagram Reels Views - ₹2/1k</option>
-                                </optgroup>
-                                <optgroup label="YOUTUBE (Monetization)">
-                                    <option value="YT Subs" data-rate="850">YouTube Subscribers (Real) - ₹850/1k</option>
-                                    <option value="YT WatchTime" data-rate="1200">YouTube 4k WatchTime - ₹1200/unit</option>
-                                    <option value="YT Views" data-rate="95">YouTube Real Views - ₹95/1k</option>
-                                </optgroup>
-                            </select>
+            <div id="section-new-order" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-3xl">
+                    <h2 class="text-2xl font-bold mb-6 italic">Place New Order</h2>
+                    <div class="space-y-4">
+                        <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
+                            <optgroup label="INSTAGRAM">
+                                <option value="IG Followers" data-rate="45">Insta Followers (Premium) - ₹45/1k</option>
+                                <option value="IG Likes" data-rate="18">Insta Likes (Real) - ₹18/1k</option>
+                                <option value="IG Reels Views" data-rate="5">Insta Reels Views - ₹5/1k</option>
+                            </optgroup>
+                            <optgroup label="YOUTUBE">
+                                <option value="YT Subs" data-rate="1450">YouTube Subscribers - ₹1450/1k</option>
+                                <option value="YT Views" data-rate="120">YouTube High Views - ₹120/1k</option>
+                            </optgroup>
+                        </select>
+                        <input id="srv-url" type="text" placeholder="Paste Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
+                        <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" oninput="calcPrice()">
+                        <div class="flex justify-between items-center bg-indigo-500/10 p-4 rounded-xl">
+                            <span class="text-slate-400 font-bold">Payable:</span>
+                            <span id="final-cost" class="text-2xl font-black text-white italic">₹45.00</span>
                         </div>
-                        <div>
-                            <label class="text-xs font-black text-slate-500 mb-2 block uppercase tracking-widest">Target URL (Link)</label>
-                            <input id="srv-url" type="text" placeholder="https://www.instagram.com/..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl outline-none focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="text-xs font-black text-slate-500 mb-2 block uppercase tracking-widest">Quantity</label>
-                            <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl outline-none focus:border-indigo-500" oninput="calc()">
-                        </div>
-                        <div class="bg-indigo-500/5 p-5 rounded-2xl border border-dashed border-indigo-500/30 flex justify-between items-center">
-                            <span class="font-bold text-slate-400 italic text-sm">Amount to Pay:</span>
-                            <span id="final-price" class="text-3xl font-black text-white underline decoration-indigo-500">₹25.00</span>
-                        </div>
-                        <button onclick="placeOrder()" class="w-full btn-main py-5 rounded-2xl font-black text-xl">PLACE ORDER NOW</button>
+                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg">CONFIRM ORDER</button>
                     </div>
                 </div>
-                
-                <div class="glass-card p-6 rounded-[2rem] h-fit">
-                    <h3 class="font-black text-indigo-400 mb-4">Why Us?</h3>
-                    <ul class="text-sm space-y-3">
-                        <li><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i> Instant Start</li>
-                        <li><i class="fa-solid fa-shield-halved text-green-500 mr-2"></i> Safe & Private</li>
-                        <li><i class="fa-solid fa-headset text-blue-500 mr-2"></i> 24/7 WhatsApp Help</li>
-                    </ul>
+                <div class="glass p-8 rounded-3xl border border-indigo-500/20">
+                    <h3 class="font-bold text-indigo-400 mb-2">💡 Quick Support</h3>
+                    <p class="text-sm text-slate-500 mb-6">Balance add nahi hua? Order fail ho gaya? Turant humein WhatsApp karein.</p>
+                    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="block text-center bg-green-600/20 text-green-400 border border-green-600/30 py-3 rounded-xl font-bold">
+                        <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp Admin
+                    </a>
                 </div>
             </div>
 
-            <div id="funds-tab" class="hidden text-center max-w-xl mx-auto glass-card p-10 rounded-[3rem]">
-                <h2 class="text-3xl font-black mb-2">SCAN & PAY</h2>
-                <p class="text-slate-400 mb-8 text-sm">Scan karke pay karein aur Transaction ID niche daalein.</p>
-                
-                <div class="bg-white p-4 inline-block rounded-3xl mb-8 shadow-2xl shadow-indigo-500/20">
-                    <img id="my-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=YOURUPI@ID&pn=DeepakSMM" class="w-64 h-64">
+            <div id="section-add-funds" class="hidden text-center max-w-lg mx-auto glass p-10 rounded-[2.5rem] shadow-2xl">
+                <h2 class="text-2xl font-black mb-2">QR SCANNER</h2>
+                <p class="text-slate-500 text-xs mb-8">Scan & Pay Any Amount (Min ₹10)</p>
+                <div class="bg-white p-4 inline-block rounded-2xl mb-8 shadow-inner">
+                    <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl=DeepakSMM" class="w-64 h-64">
                 </div>
-
                 <div class="space-y-4">
-                    <input id="utr-id" type="text" placeholder="Enter Transaction ID (UTR)" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-2xl text-center outline-none">
-                    <button class="w-full bg-green-600 py-4 rounded-2xl font-black flex items-center justify-center gap-3">
-                        <i class="fa-brands fa-whatsapp text-2xl"></i> WHATSAPP PAYMENT PROOF
+                    <input id="utr-input" type="text" placeholder="Enter UTR / Transaction ID" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none text-center">
+                    <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white hover:bg-green-500 shadow-lg">
+                        <i class="fa-brands fa-whatsapp mr-2"></i> SUBMIT PAYMENT PROOF
                     </button>
-                    <p class="text-[10px] text-slate-500 italic">Balance will be added within 5-10 minutes after verification.</p>
                 </div>
             </div>
 
-            <div id="history-tab" class="hidden glass-card p-6 rounded-[2rem]">
-                <h2 class="text-2xl font-black mb-6">Recent Orders</h2>
-                <div id="history-list" class="space-y-4">
-                    </div>
+            <div id="section-history" class="hidden">
+                <h2 class="text-xl font-bold mb-6">Recent Orders</h2>
+                <div id="history-list" class="space-y-4"></div>
             </div>
         </div>
     </main>
 
-    <div id="reg-modal" class="fixed inset-0 bg-black/95 z-[100] hidden flex items-center justify-center p-6">
-        <div class="bg-slate-900 border border-slate-800 p-10 rounded-[2.5rem] w-full max-w-md shadow-2xl">
-            <h2 class="text-4xl font-black mb-2">Create Account</h2>
-            <p class="text-slate-500 mb-8">Join the cheapest SMM panel in India.</p>
-            <input id="r-name" type="text" placeholder="User Name" class="w-full bg-slate-800 p-4 rounded-2xl mb-4 outline-none">
-            <input id="r-email" type="email" placeholder="Email Address" class="w-full bg-slate-800 p-4 rounded-2xl mb-4 outline-none">
-            <input id="r-pass" type="password" placeholder="Set Password" class="w-full bg-slate-800 p-4 rounded-2xl mb-8 outline-none">
-            <button onclick="register()" class="w-full btn-main py-5 rounded-2xl font-black text-xl">Sign Up & Get ₹100 Bonus</button>
-            <button onclick="closeModal('reg-modal')" class="w-full mt-4 text-slate-500 font-bold">Close</button>
+    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[100] hidden flex items-center justify-center p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500">
+            <h2 class="text-3xl font-black text-indigo-400 mb-6">ADMIN CONTROL</h2>
+            <div class="space-y-4">
+                <input id="adm-email" type="email" placeholder="Customer Email" class="w-full bg-slate-900 p-4 rounded-xl outline-none border border-slate-700">
+                <input id="adm-amt" type="number" placeholder="Add Balance (₹)" class="w-full bg-slate-900 p-4 rounded-xl outline-none border border-slate-700">
+                <button onclick="adminAdd()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold">ACTIVATE FUNDS</button>
+                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full text-slate-500 mt-2">Close Admin</button>
+            </div>
         </div>
     </div>
 
+    <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-center justify-center p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-slate-800 shadow-2xl">
+            <h2 class="text-3xl font-bold mb-2 italic">Get Started</h2>
+            <p class="text-slate-500 mb-8 text-sm italic">Account Balance will be ₹0 initially.</p>
+            <input id="r-name" type="text" placeholder="Full Name" class="w-full bg-slate-900 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <input id="r-email" type="email" placeholder="Email Address" class="w-full bg-slate-900 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <input id="r-pass" type="password" placeholder="Set Password" class="w-full bg-slate-900 p-4 rounded-xl mb-8 outline-none border border-slate-700">
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-black text-xl">CREATE ACCOUNT</button>
+            <button onclick="document.getElementById('reg-modal').classList.add('hidden')" class="w-full mt-4 text-slate-500 font-bold">Back</button>
+        </div>
+    </div>
+
+    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 hover:text-indigo-500 cursor-pointer opacity-20">
+        <i class="fa-solid fa-gear"></i>
+    </div>
+
     <script>
-        let users = JSON.parse(localStorage.getItem('sm_db')) || [];
-        let session = JSON.parse(localStorage.getItem('sm_session')) || null;
+        let users = JSON.parse(localStorage.getItem('deepak_users')) || [];
+        let session = JSON.parse(localStorage.getItem('deepak_session')) || null;
 
-        function calc() {
-            const rate = document.getElementById('srv-list').options[document.getElementById('srv-list').selectedIndex].dataset.rate;
-            const qty = document.getElementById('srv-qty').value;
-            const total = (qty / 1000) * rate;
-            document.getElementById('final-price').innerText = "₹" + total.toFixed(2);
-        }
-
-        function switchTab(tab) {
-            document.querySelectorAll('#dash-view > div[id$="-tab"]').forEach(d => d.classList.add('hidden'));
-            document.getElementById(tab + '-tab').classList.remove('hidden');
-            // Reset buttons colors
-            document.querySelectorAll('[id^="tab-btn-"]').forEach(b => { b.classList.remove('bg-indigo-600'); b.classList.add('bg-slate-800'); });
-            document.getElementById('tab-btn-' + tab).classList.add('bg-indigo-600');
-        }
-
-        function register() {
-            const n = document.getElementById('r-name').value;
-            const e = document.getElementById('r-email').value;
-            const p = document.getElementById('r-pass').value;
+        function registerUser() {
+            const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
             if(!n || !e || !p) return alert("Sari details bhariye!");
+            if(users.find(u => u.email === e)) return alert("Email pehle se register hai!");
             
-            const newUser = { name: n, email: e, pass: p, balance: 100.0, orders: [] };
-            users.push(newUser);
-            localStorage.setItem('sm_db', JSON.stringify(users));
-            session = newUser;
-            localStorage.setItem('sm_session', JSON.stringify(session));
+            const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
+            users.push(u);
+            localStorage.setItem('deepak_users', JSON.stringify(users));
+            session = u;
+            localStorage.setItem('deepak_session', JSON.stringify(session));
             location.reload();
         }
 
-        function placeOrder() {
-            const rate = document.getElementById('srv-list').options[document.getElementById('srv-list').selectedIndex].dataset.rate;
-            const cost = (document.getElementById('srv-qty').value / 1000) * rate;
+        function logout() { localStorage.removeItem('deepak_session'); location.reload(); }
 
+        function switchTab(t) {
+            document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
+            document.getElementById('section-' + t).classList.remove('hidden');
+            document.querySelectorAll('[id^="tab-"]').forEach(b => { b.classList.remove('active-tab'); b.classList.add('text-slate-500'); });
+            document.getElementById('tab-' + t).classList.add('active-tab');
+        }
+
+        function calcPrice() {
+            const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
+            const q = document.getElementById('srv-qty').value;
+            document.getElementById('final-cost').innerText = "₹" + ((q/1000) * r).toFixed(2);
+        }
+
+        function placeOrder() {
+            const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
+            const cost = (document.getElementById('srv-qty').value / 1000) * r;
+            const url = document.getElementById('srv-url').value;
+            if(!url) return alert("Invalid Link!");
             if(session.balance >= cost) {
                 session.balance -= cost;
-                session.orders.unshift({
-                    id: '#' + Math.floor(100000 + Math.random() * 900000),
-                    service: document.getElementById('srv-list').value,
-                    qty: document.getElementById('srv-qty').value,
-                    cost: cost.toFixed(2),
-                    status: 'In Progress'
-                });
-                save();
-                render();
-                alert("Order Successful! Followers/Views badhna shuru ho jayenge.");
-            } else {
-                alert("Paise kam hain! Please Add Funds tab se recharge karein.");
+                session.orders.unshift({ srv: document.getElementById('srv-select').value, qty: document.getElementById('srv-qty').value, cost: cost.toFixed(2), status: 'Completed' });
+                sync(); render(); alert("Order Placed Successfully!");
+            } else { 
+                alert("Paise kam hain! QR Scan karke recharge karein."); 
+                switchTab('add-funds');
             }
         }
 
-        function save() {
-            localStorage.setItem('sm_session', JSON.stringify(session));
-            const i = users.findIndex(u => u.email === session.email);
+        function openAdmin() { if(prompt("Pass?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
+        
+        function adminAdd() {
+            const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
+            let idx = users.findIndex(u => u.email === email);
+            if(idx !== -1) {
+                users[idx].balance += amt;
+                localStorage.setItem('deepak_users', JSON.stringify(users));
+                if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
+                alert(`Balance ₹${amt} Add ho gaya!`); render();
+            } else { alert("User nahi mila!"); }
+        }
+
+        function whatsappPay() {
+            const utr = document.getElementById('utr-input').value;
+            const phone = "919250996142"; // <--- APNA NUMBER YAHAN DALEIN
+            if(!utr) return alert("Pehle UTR ID daaliye!");
+            window.open(`https://wa.me/${phone}?text=Hello DeepakSMM, Maine Pay kar diya hai.%0AEmail: ${session.email}%0AUTR: ${utr}`, '_blank');
+        }
+
+        function sync() {
+            localStorage.setItem('deepak_session', JSON.stringify(session));
+            let i = users.findIndex(u => u.email === session.email);
             users[i] = session;
-            localStorage.setItem('sm_db', JSON.stringify(users));
+            localStorage.setItem('deepak_users', JSON.stringify(users));
         }
 
         function render() {
             if(session) {
                 document.getElementById('home-view').classList.add('hidden');
                 document.getElementById('dash-view').classList.remove('hidden');
-                document.getElementById('logged-in-nav').classList.remove('hidden');
-                document.getElementById('nav-bal').innerText = "₹" + session.balance.toFixed(2);
-                document.getElementById('stat-bal').innerText = "₹" + session.balance.toFixed(0);
-                document.getElementById('stat-orders').innerText = session.orders.length;
-                
-                const history = document.getElementById('history-list');
-                history.innerHTML = session.orders.length ? session.orders.map(o => `
-                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex justify-between items-center">
-                        <div>
-                            <p class="font-bold text-white">${o.service} <span class="text-[10px] text-indigo-400">${o.id}</span></p>
-                            <p class="text-xs text-slate-500 italic">Qty: ${o.qty} | Cost: ₹${o.cost}</p>
-                        </div>
-                        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 uppercase tracking-widest">${o.status}</span>
+                document.getElementById('user-info').classList.remove('hidden');
+                document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
+                document.getElementById('history-list').innerHTML = session.orders.map(o => `
+                    <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
+                        <div><p class="font-bold text-white">${o.srv}</p><p class="text-xs text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                        <span class="text-[10px] bg-green-500/20 text-green-500 px-3 py-1 rounded-full font-bold uppercase">${o.status}</span>
                     </div>
-                `).join('') : "<p class='text-center py-10 text-slate-600'>No history found.</p>";
+                `).join('') || "<p class='text-center py-10'>No Orders Yet.</p>";
             }
         }
-
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-        function logout() { localStorage.removeItem('sm_session'); location.reload(); }
-
-        render(); calc();
+        render(); calcPrice();
     </script>
 </body>
 </html>
