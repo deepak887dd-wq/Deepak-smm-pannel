@@ -3,225 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak AI SMM Panel | Working Pro</title>
+    <title>Deepak AI | SMM Panel PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .glass-panel { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .hidden { display: none; }
-        .gradient-bg { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); }
+        .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .hidden { display: none !important; }
+        .gradient-btn { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
+        .gradient-btn:hover { opacity: 0.9; transform: scale(1.02); }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans">
+<body class="bg-slate-900 text-white font-sans overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 glass-panel border-b border-slate-700 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+    <nav class="fixed w-full z-50 glass-panel px-6 py-4 flex justify-between items-center border-b border-slate-800">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.reload()">
             <i class="fa-solid fa-bolt text-indigo-500 text-2xl"></i>
-            <span class="font-bold text-xl">Deepak<span class="text-indigo-500">AI</span></span>
+            <span class="font-bold text-xl tracking-tight">Deepak<span class="text-indigo-500">AI</span></span>
         </div>
-        <div id="nav-links" class="hidden md:flex gap-6">
-            <button onclick="showPage('home')" class="hover:text-indigo-400">Home</button>
-            <button id="dash-link" onclick="showPage('dashboard')" class="hidden hover:text-indigo-400">Dashboard</button>
+        
+        <div id="auth-section" class="flex gap-4">
+            <button onclick="openModal('loginModal')" class="text-sm font-medium hover:text-indigo-400">Log In</button>
+            <button onclick="openModal('registerModal')" class="gradient-btn px-5 py-2 rounded-full text-sm font-bold">Get Started</button>
         </div>
-        <div id="auth-btns" class="flex gap-4">
-            <button onclick="openModal('loginModal')" class="text-sm font-semibold">Log In</button>
-            <button onclick="openModal('registerModal')" class="bg-indigo-600 px-4 py-2 rounded-full text-sm font-bold">Register</button>
-        </div>
-        <div id="user-profile" class="hidden flex items-center gap-4">
-            <span id="nav-user-name" class="text-sm font-bold text-indigo-400"></span>
-            <button onclick="logout()" class="text-xs bg-red-500/20 text-red-400 px-3 py-1 rounded-lg border border-red-500/50">Logout</button>
+
+        <div id="user-section" class="hidden flex items-center gap-4">
+            <div class="text-right hidden sm:block">
+                <p id="user-display-name" class="text-sm font-bold leading-none"></p>
+                <p id="user-display-balance" class="text-xs text-green-400 font-bold"></p>
+            </div>
+            <button onclick="logout()" class="bg-red-500/20 text-red-400 text-xs px-3 py-2 rounded-lg border border-red-500/30">Logout</button>
         </div>
     </nav>
 
-    <main class="pt-24 px-4">
+    <main class="pt-32 pb-20 px-4">
         
-        <div id="home-page" class="page-section text-center py-20">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6">Boost Social Media <br><span class="text-indigo-500">Instantly</span></h1>
-            <p class="text-slate-400 text-xl mb-10">Sign up today and get $100 Demo Balance to test our services!</p>
-            <button onclick="openModal('registerModal')" class="gradient-bg px-10 py-4 rounded-full font-bold text-lg shadow-lg">Start Now - It's Free</button>
+        <div id="home-page" class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Fastest SMM <br><span class="text-indigo-500 underline">Panel Services</span></h1>
+            <p class="text-slate-400 text-lg mb-8">Register now and get $100 Demo Credits instantly in your wallet!</p>
+            <div class="flex justify-center gap-4">
+                <button onclick="openModal('registerModal')" class="gradient-btn px-8 py-4 rounded-xl font-bold text-lg">Create Free Account</button>
+            </div>
         </div>
 
-        <div id="dashboard-page" class="page-section hidden max-w-5xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                    <p class="text-slate-400">Total Balance</p>
-                    <h2 id="balance-display" class="text-3xl font-bold text-green-400">$0.00</h2>
+        <div id="dashboard-page" class="hidden max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 text-center">
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">Balance</p>
+                    <h2 id="dash-balance" class="text-4xl font-black text-indigo-400">$0.00</h2>
                 </div>
-                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                    <p class="text-slate-400">Orders Completed</p>
-                    <h2 id="order-count" class="text-3xl font-bold">0</h2>
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">Total Orders</p>
+                    <h2 id="dash-orders" class="text-4xl font-black">0</h2>
                 </div>
-                <div class="gradient-bg p-6 rounded-2xl flex items-center justify-center">
-                    <button onclick="document.getElementById('order-section').scrollIntoView()" class="font-bold text-lg">New Order +</button>
-                </div>
-            </div>
-
-            <div id="order-section" class="bg-slate-800 p-8 rounded-2xl border border-slate-700 mb-10">
-                <h3 class="text-2xl font-bold mb-6">Place New Order</h3>
-                <div class="grid gap-4">
-                    <label>Select Service</label>
-                    <select id="service-select" class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none">
-                        <option value="Instagram Followers" data-price="0.05">Instagram Followers ($0.05 per 1k)</option>
-                        <option value="YouTube Subscribers" data-price="2.50">YouTube Subscribers ($2.50 per 1k)</option>
-                        <option value="TikTok Likes" data-price="0.02">TikTok Likes ($0.02 per 1k)</option>
-                    </select>
-                    <label>Link</label>
-                    <input id="order-link" type="text" placeholder="https://instagram.com/yourprofile" class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none">
-                    <label>Quantity</label>
-                    <input id="order-qty" type="number" placeholder="Min: 100" class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none">
-                    <button onclick="handlePlaceOrder()" class="bg-indigo-600 py-4 rounded-xl font-bold mt-4 hover:bg-indigo-500 transition">Confirm Order</button>
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">Status</p>
+                    <h2 class="text-4xl font-black text-green-500 italic">Active</h2>
                 </div>
             </div>
 
-            <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 overflow-x-auto">
-                <h3 class="text-xl font-bold mb-4">My Orders</h3>
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="text-slate-500 border-b border-slate-700">
-                            <th class="py-3">Service</th>
-                            <th class="py-3">Qty</th>
-                            <th class="py-3">Cost</th>
-                            <th class="py-3">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-history">
-                        </tbody>
-                </table>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-cart-plus text-indigo-500"></i> New Order</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 mb-1 block">PLATFORM SERVICE</label>
+                            <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none focus:border-indigo-500">
+                                <option value="Instagram Followers" data-price="0.50">Instagram Followers ($0.50 / 1k)</option>
+                                <option value="YouTube Subscribers" data-price="5.00">YouTube Subscribers ($5.00 / 1k)</option>
+                                <option value="TikTok Views" data-price="0.10">TikTok Views ($0.10 / 1k)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 mb-1 block">TARGET LINK</label>
+                            <input id="srv-link" type="url" placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 mb-1 block">QUANTITY (Min: 100)</label>
+                            <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none focus:border-indigo-500">
+                        </div>
+                        <button onclick="placeOrderNow()" class="w-full gradient-btn py-4 rounded-xl font-black text-lg shadow-lg shadow-indigo-500/20">PLACE ORDER</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-6 italic">Recent Activity</h3>
+                    <div id="order-history" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                        <p class="text-slate-500 text-center py-10">No orders yet. Boost your profile now!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <div id="loginModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-slate-800 p-8 rounded-3xl w-full max-w-md relative">
-            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4">✕</button>
-            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-            <input id="login-email" type="email" placeholder="Email" class="w-full bg-slate-900 p-4 rounded-xl mb-4 border border-slate-700">
-            <input id="login-pass" type="password" placeholder="Password" class="w-full bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
-            <button onclick="processLogin()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold">Login</button>
+    <div id="loginModal" class="fixed inset-0 bg-black/90 hidden z-[100] flex items-center justify-center p-6">
+        <div class="bg-slate-800 p-8 rounded-3xl w-full max-w-sm border border-slate-700">
+            <h2 class="text-3xl font-black mb-6">Welcome Back</h2>
+            <input id="l-email" type="email" placeholder="Email" class="w-full bg-slate-900 p-4 rounded-xl mb-3 border border-slate-700">
+            <input id="l-pass" type="password" placeholder="Password" class="w-full bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
+            <button onclick="login()" class="w-full gradient-btn py-4 rounded-xl font-bold">Login</button>
+            <button onclick="closeModal('loginModal')" class="w-full mt-4 text-slate-500 text-sm">Cancel</button>
         </div>
     </div>
 
-    <div id="registerModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4">
-        <div class="bg-slate-800 p-8 rounded-3xl w-full max-w-md relative">
-            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4">✕</button>
-            <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
-            <input id="reg-name" type="text" placeholder="Full Name" class="w-full bg-slate-900 p-4 rounded-xl mb-4 border border-slate-700">
-            <input id="reg-email" type="email" placeholder="Email" class="w-full bg-slate-900 p-4 rounded-xl mb-4 border border-slate-700">
-            <input id="reg-pass" type="password" placeholder="Password" class="w-full bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
-            <button onclick="processRegister()" class="w-full gradient-bg py-4 rounded-xl font-bold">Register Now</button>
+    <div id="registerModal" class="fixed inset-0 bg-black/90 hidden z-[100] flex items-center justify-center p-6">
+        <div class="bg-slate-800 p-8 rounded-3xl w-full max-w-sm border border-slate-700">
+            <h2 class="text-3xl font-black mb-2">Join Us</h2>
+            <p class="text-slate-400 mb-6 text-sm">Get $100 free credit on signup.</p>
+            <input id="r-name" type="text" placeholder="Full Name" class="w-full bg-slate-900 p-4 rounded-xl mb-3 border border-slate-700">
+            <input id="r-email" type="email" placeholder="Email Address" class="w-full bg-slate-900 p-4 rounded-xl mb-3 border border-slate-700">
+            <input id="r-pass" type="password" placeholder="Create Password" class="w-full bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
+            <button onclick="register()" class="w-full gradient-btn py-4 rounded-xl font-bold">Register & Claim $100</button>
+            <button onclick="closeModal('registerModal')" class="w-full mt-4 text-slate-500 text-sm">Cancel</button>
         </div>
     </div>
 
     <script>
-        // --- CORE LOGIC ---
-        let currentUser = JSON.parse(localStorage.getItem('session')) || null;
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-
-        // UI Initial Setup
-        if(currentUser) updateUI();
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
-            document.getElementById(pageId + '-page').classList.remove('hidden');
-        }
+        // --- DATA ENGINE ---
+        let users = JSON.parse(localStorage.getItem('smm_users')) || [];
+        let session = JSON.parse(localStorage.getItem('smm_session')) || null;
 
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
-        // REGISTER
-        function processRegister() {
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-pass').value;
+        // 1. REGISTER FUNCTION
+        function register() {
+            const name = document.getElementById('r-name').value;
+            const email = document.getElementById('r-email').value;
+            const pass = document.getElementById('r-pass').value;
 
-            if(!name || !email || !pass) return alert("Please fill all fields!");
-            
+            if(!name || !email || !pass) return alert("All fields are required!");
+
+            // Check if user exists
+            if(users.find(u => u.email === email)) return alert("Email already registered!");
+
             const newUser = { name, email, pass, balance: 100.00, orders: [] };
             users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            alert("Registration Successful! Now please login.");
-            closeModal('registerModal');
-            openModal('loginModal');
+            localStorage.setItem('smm_users', JSON.stringify(users));
+            
+            // Auto login
+            session = newUser;
+            localStorage.setItem('smm_session', JSON.stringify(session));
+            
+            alert("Account Created! You got $100 Welcome Bonus.");
+            location.reload(); // Refresh to start session
         }
 
-        // LOGIN
-        function processLogin() {
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-pass').value;
+        // 2. LOGIN FUNCTION
+        function login() {
+            const email = document.getElementById('l-email').value;
+            const pass = document.getElementById('l-pass').value;
 
             const user = users.find(u => u.email === email && u.pass === pass);
             if(user) {
-                currentUser = user;
-                localStorage.setItem('session', JSON.stringify(user));
-                updateUI();
-                showPage('dashboard');
-                closeModal('loginModal');
+                session = user;
+                localStorage.setItem('smm_session', JSON.stringify(session));
+                location.reload();
             } else {
-                alert("Invalid Credentials!");
+                alert("Wrong email or password!");
             }
         }
 
-        // LOGOUT
+        // 3. LOGOUT
         function logout() {
-            localStorage.removeItem('session');
+            localStorage.removeItem('smm_session');
             location.reload();
         }
 
-        // UPDATE UI AFTER LOGIN
-        function updateUI() {
-            document.getElementById('auth-btns').classList.add('hidden');
-            document.getElementById('user-profile').classList.remove('hidden');
-            document.getElementById('dash-link').classList.remove('hidden');
-            document.getElementById('nav-user-name').innerText = currentUser.name;
-            document.getElementById('balance-display').innerText = "$" + currentUser.balance.toFixed(2);
-            document.getElementById('order-count').innerText = currentUser.orders.length;
-            
-            renderOrders();
-        }
+        // 4. PLACE ORDER
+        function placeOrderNow() {
+            const srv = document.getElementById('srv-select');
+            const qty = parseInt(document.getElementById('srv-qty').value);
+            const link = document.getElementById('srv-link').value;
+            const price = parseFloat(srv.options[srv.selectedIndex].dataset.price);
 
-        // PLACE ORDER
-        function handlePlaceOrder() {
-            const serviceTag = document.getElementById('service-select');
-            const serviceName = serviceTag.value;
-            const pricePerK = parseFloat(serviceTag.options[serviceTag.selectedIndex].dataset.price);
-            const qty = parseInt(document.getElementById('order-qty').value);
-            const link = document.getElementById('order-link').value;
+            if(!link || qty < 100) return alert("Enter valid link and min 100 quantity!");
 
-            if(!qty || qty < 100 || !link) return alert("Please enter valid link and quantity (Min 100)");
+            const cost = (qty / 1000) * price;
 
-            const cost = (qty / 1000) * pricePerK;
+            if(session.balance >= cost) {
+                session.balance -= cost;
+                const order = {
+                    id: '#' + Math.floor(Math.random()*9000 + 1000),
+                    service: srv.value,
+                    qty: qty,
+                    cost: cost.toFixed(2),
+                    status: 'Processing'
+                };
+                session.orders.unshift(order);
 
-            if(currentUser.balance >= cost) {
-                currentUser.balance -= cost;
-                const newOrder = { service: serviceName, qty: qty, cost: cost.toFixed(4), status: 'Pending' };
-                currentUser.orders.unshift(newOrder); // Newest first
+                // Update database
+                const idx = users.findIndex(u => u.email === session.email);
+                users[idx] = session;
+                localStorage.setItem('smm_users', JSON.stringify(users));
+                localStorage.setItem('smm_session', JSON.stringify(session));
 
-                // Save to local storage
-                localStorage.setItem('session', JSON.stringify(currentUser));
-                
-                // Update master users list
-                const userIdx = users.findIndex(u => u.email === currentUser.email);
-                users[userIdx] = currentUser;
-                localStorage.setItem('users', JSON.stringify(users));
-
-                updateUI();
-                alert("Order Placed Successfully!");
+                renderUI();
+                alert("Order Placed!");
             } else {
-                alert("Insufficient Balance! Your current balance is $" + currentUser.balance.toFixed(2));
+                alert("Insufficient Balance!");
             }
         }
 
-        function renderOrders() {
-            const list = document.getElementById('order-history');
-            list.innerHTML = currentUser.orders.map(o => `
-                <tr class="border-b border-slate-700 text-sm">
-                    <td class="py-4">${o.service}</td>
-                    <td>${o.qty}</td>
-                    <td>$${o.cost}</td>
-                    <td><span class="bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded text-xs">${o.status}</span></td>
-                </tr>
-            `).join('');
+        // 5. RENDER UI
+        function renderUI() {
+            if(session) {
+                document.getElementById('home-page').classList.add('hidden');
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('dashboard-page').classList.remove('hidden');
+                document.getElementById('user-section').classList.remove('hidden');
+                
+                document.getElementById('user-display-name').innerText = session.name;
+                document.getElementById('user-display-balance').innerText = "$" + session.balance.toFixed(2);
+                document.getElementById('dash-balance').innerText = "$" + session.balance.toFixed(2);
+                document.getElementById('dash-orders').innerText = session.orders.length;
+
+                const history = document.getElementById('order-history');
+                if(session.orders.length > 0) {
+                    history.innerHTML = session.orders.map(o => `
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                            <div>
+                                <p class="font-bold text-sm">${o.service} <span class="text-indigo-400 text-xs">${o.id}</span></p>
+                                <p class="text-xs text-slate-500">Qty: ${o.qty} | Cost: $${o.cost}</p>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-indigo-500/20 text-indigo-400 uppercase">${o.status}</span>
+                        </div>
+                    `).join('');
+                }
+            }
         }
+
+        // Run UI on load
+        renderUI();
     </script>
 </body>
 </html>
