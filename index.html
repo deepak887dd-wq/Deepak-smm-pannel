@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak AI SMM Panel | Best Social Media Marketing Services</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Config & Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            primary: '#6366f1', // Indigo
+                            accent: '#ec4899', // Pink
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Animations */
+        .gradient-text {
+            background: linear-gradient(to right, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Hide scrollbar for dashboard */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white font-sans antialiased overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+                    <i class="fa-solid fa-bolt text-brand-primary text-2xl"></i>
+                    <span class="font-bold text-xl tracking-wide">Deepak<span class="text-brand-primary">AI</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" onclick="showPage('home')" class="hover:text-brand-primary transition">Home</a>
+                    <a href="#services" onclick="showPage('home')" class="hover:text-brand-primary transition">Services</a>
+                    <a href="#pricing" onclick="showPage('home')" class="hover:text-brand-primary transition">API</a>
+                    <a href="#contact" onclick="showPage('home')" class="hover:text-brand-primary transition">Support</a>
+                </div>
+
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="openModal('loginModal')" class="text-sm font-semibold hover:text-brand-primary">Log In</button>
+                    <button onclick="openModal('registerModal')" class="bg-brand-primary hover:bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-lg shadow-indigo-500/30">
+                        Register
+                    </button>
+                    <button onclick="showPage('dashboard')" id="dashBtn" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-600 px-4 py-2 rounded-lg text-sm">
+                        <i class="fa-solid fa-user-circle mr-2"></i> Dashboard
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700">
+            <a href="#" onclick="showPage('home')" class="block px-4 py-3 hover:bg-slate-700">Home</a>
+            <a href="#services" class="block px-4 py-3 hover:bg-slate-700">Services</a>
+            <a href="#pricing" class="block px-4 py-3 hover:bg-slate-700">API & Pricing</a>
+            <div class="border-t border-slate-700 pt-4 pb-2 px-4">
+                <button onclick="openModal('loginModal')" class="block w-full text-left py-2">Log In</button>
+                <button onclick="openModal('registerModal')" class="block w-full text-left py-2 text-brand-primary font-bold">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= HOME PAGE ================= -->
+    <div id="home-page">
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+            <div class="absolute top-0 left-1/2 w-full -translate-x-1/2 h-full z-[-1]">
+                <div class="absolute top-20 left-10 w-72 h-72 bg-brand-primary rounded-full mix-blur-3xl opacity-20 animate-pulse"></div>
+                <div class="absolute bottom-20 right-10 w-96 h-96 bg-brand-accent rounded-full mix-blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Boost Your Social Media <br>
+                    <span class="gradient-text">Instantly with Deepak AI</span>
+                </h1>
+                <p class="text-slate-400 text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+                    The #1 SMM Panel for Resellers and Individual creators. Automated services, cheap prices, and 24/7 support.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="openModal('registerModal')" class="bg-gradient-to-r from-brand-primary to-purple-600 hover:from-indigo-600 hover:to-purple-700 px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-indigo-500/40 transition transform hover:scale-105">
+                        Get Started Now
+                    </button>
+                    <button onclick="showPage('dashboard')" class="glass-panel hover:bg-slate-800 px-8 py-4 rounded-full font-bold text-lg transition border border-slate-600">
+                        View Live Demo
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="p-4">
+                        <h3 class="text-3xl font-bold text-white">1M+</h3>
+                        <p class="text-slate-400">Orders Completed</p>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-3xl font-bold text-white">50k+</h3>
+                        <p class="text-slate-400">Happy Users</p>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-3xl font-bold text-white">500+</h3>
+                        <p class="text-slate-400">Services</p>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-3xl font-bold text-white">24/7</h3>
+                        <p class="text-slate-400">Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Preview -->
+        <section id="services" class="py-20 bg-slate-900/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Our <span class="text-brand-primary">Services</span></h2>
+                    <p class="text-slate-400">High quality followers, likes, and views for all major platforms.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Instagram -->
+                    <div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700 transition duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-orange-400 rounded-full flex items-center justify-center mb-6 text-2xl">
+                            <i class="fa-brands fa-instagram text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Instagram</h3>
+                        <ul class="text-slate-400 space-y-2 mb-6">
+                            <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Followers</li>
+                            <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Likes</li>
+                            <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Views & Reels</li>
+                        </ul>
+                        <a href="#" class="text-brand-primary font-semibold hover:underline">View Prices &rarr;</a>
+                    </div>
+
+                    <!-- TikTok -->
+                    <div class="service-card bg-slate-800 p-8 rounded-2xl border border-slate-700 transition duration-300">
+                        <div class="w-14 h-14 bg-black border border-slate-600 rounded-full flex items-center justify-center mb-6 text-2xl">
+                            <i class="fa-brands fa-tiktok text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">TikTok</h3>
+                        <ul class="text-slate-400 space-y-2 mb-6">
+                            <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Followers</li>
+                            <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Likes</li>
+                            <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Views</li>
+                        </ul>
+                        <a href="#" class="text-brand-primary font-semibold hover:underline">View Prices &rarr;</a>
+                    </div>
+
+                    <!-- YouTube -->
+                    <div class="service-card bg-slate-800 p
