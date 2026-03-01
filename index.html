@@ -1,228 +1,232 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deepak AI SMM Panel | Best Social Media Marketing Services</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak SMM | Professional Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-grad { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
+        .hidden { display: none !important; }
+        .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
+        /* Animation for Order */
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .processing { animation: pulse 1.5s infinite; color: #fbbf24; }
+    </style>
+</head>
+<body>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <nav class="fixed w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-slate-800">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
+            <i class="fa-solid fa-bolt text-indigo-500 text-2xl"></i>
+            <span class="font-bold text-xl uppercase tracking-tighter text-white">Deepak<span class="text-indigo-500">SMM</span></span>
+        </div>
+        <div id="user-info" class="hidden flex items-center gap-4">
+            <span id="top-balance" class="bg-indigo-500/10 px-3 py-1 rounded-full text-green-400 font-bold border border-green-500/20">₹0.00</span>
+            <button onclick="logout()" class="text-slate-400 hover:text-red-400"><i class="fa-solid fa-power-off"></i></button>
+        </div>
+    </nav>
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <main class="pt-28 pb-10 px-4 max-w-5xl mx-auto">
+        
+        <div id="home-view" class="text-center py-20">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 italic">Deepak <span class="text-indigo-500">SMM</span></h1>
+            <p class="text-slate-400 mb-10 text-lg">Instant Delivery. Real Quality. Premium Support.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl shadow-xl">Get Started</button>
+                <button onclick="window.open('https://wa.me/919250996142', '_blank')" class="bg-slate-800 border border-slate-700 px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-700">Contact Admin</button>
+            </div>
+        </div>
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <div id="dash-view" class="hidden">
+            <div class="flex gap-8 border-b border-slate-800 mb-8 overflow-x-auto">
+                <button onclick="switchTab('new-order')" id="tab-new-order" class="pb-4 active-tab">New Order</button>
+                <button onclick="switchTab('add-funds')" id="tab-add-funds" class="pb-4 text-slate-500 font-bold">Add Funds (QR)</button>
+                <button onclick="switchTab('history')" id="tab-history" class="pb-4 text-slate-500">My Orders</button>
+            </div>
 
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    brand: {
-                        dark: '#0f172a',
-                        primary: '#6366f1',
-                        accent: '#ec4899',
-                    }
-                },
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                }
+            <div id="section-new-order" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-3xl">
+                    <h2 class="text-2xl font-bold mb-6 italic text-indigo-400">Place Order</h2>
+                    <div class="space-y-4">
+                        <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
+                            <optgroup label="INSTAGRAM">
+                                <option value="IG Followers" data-rate="45">Insta Followers (Premium) - ₹45/1k</option>
+                                <option value="IG Likes" data-rate="18">Insta Likes (Real) - ₹18/1k</option>
+                                <option value="IG Reels Views" data-rate="5">Insta Reels Views - ₹5/1k</option>
+                            </optgroup>
+                            <optgroup label="YOUTUBE">
+                                <option value="YT Subs" data-rate="1450">YouTube Subscribers - ₹1450/1k</option>
+                                <option value="YT Watch" data-rate="1850">YouTube Watchtime - ₹1850/unit</option>
+                            </optgroup>
+                        </select>
+                        <input id="srv-url" type="text" placeholder="Paste Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
+                        <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" oninput="calcPrice()">
+                        <div class="flex justify-between items-center bg-indigo-500/10 p-4 rounded-xl">
+                            <span class="text-slate-400">Total Price:</span>
+                            <span id="final-cost" class="text-2xl font-black text-white">₹45.00</span>
+                        </div>
+                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg">CONFIRM ORDER</button>
+                    </div>
+                </div>
+                <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10">
+                    <h3 class="font-bold text-indigo-400 mb-2">Live Status</h3>
+                    <p class="text-xs text-slate-500">Orders are processing normally. Current Speed: 10k/hr.</p>
+                </div>
+            </div>
+
+            <div id="section-add-funds" class="hidden text-center max-w-lg mx-auto glass p-10 rounded-[2.5rem]">
+                <h2 class="text-2xl font-black mb-2">SCANNER</h2>
+                <div class="bg-white p-4 inline-block rounded-2xl mb-8">
+                    <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-64 h-64">
+                </div>
+                <input id="utr-input" type="text" placeholder="Enter Transaction ID" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center">
+                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">
+                    <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> SUBMIT PROOF
+                </button>
+                <p class="text-[10px] text-slate-600 mt-4 underline cursor-pointer" onclick="switchTab('new-order')">Go Back to Dashboard</p>
+            </div>
+
+            <div id="section-history" class="hidden space-y-4">
+                <h2 class="text-xl font-bold mb-4">Your Recent Orders</h2>
+                <div id="history-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-6">Create Account</h2>
+            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
+            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
+            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none">
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register Now</button>
+            <button onclick="document.getElementById('reg-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Cancel</button>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[101] hidden flex items-center justify-center p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500 shadow-2xl">
+            <h2 class="text-2xl font-black text-indigo-400 mb-6">ADMIN PANEL</h2>
+            <div class="space-y-4">
+                <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
+                <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
+                <button onclick="adminAdd()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold">ADD BALANCE</button>
+                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl"><i class="fa-solid fa-gear"></i></div>
+
+    <script>
+        let users = JSON.parse(localStorage.getItem('deepak_users')) || [];
+        let session = JSON.parse(localStorage.getItem('deepak_session')) || null;
+
+        function registerUser() {
+            const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
+            if(!n || !e || !p) return alert("Pehle sab bhariye!");
+            const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
+            users.push(u);
+            localStorage.setItem('deepak_users', JSON.stringify(users));
+            session = u;
+            localStorage.setItem('deepak_session', JSON.stringify(session));
+            location.reload();
+        }
+
+        function logout() { localStorage.removeItem('deepak_session'); location.reload(); }
+
+        function switchTab(t) {
+            document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
+            document.getElementById('section-' + t).classList.remove('hidden');
+            document.querySelectorAll('[id^="tab-"]').forEach(b => { b.classList.remove('active-tab'); b.classList.add('text-slate-500'); });
+            document.getElementById('tab-' + t).classList.add('active-tab');
+        }
+
+        function calcPrice() {
+            const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
+            const q = document.getElementById('srv-qty').value;
+            document.getElementById('final-cost').innerText = "₹" + ((q/1000) * r).toFixed(2);
+        }
+
+        function placeOrder() {
+            const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
+            const cost = (document.getElementById('srv-qty').value / 1000) * r;
+            const url = document.getElementById('srv-url').value;
+            
+            if(!url) return alert("Link kahan hai?");
+            if(session.balance >= cost) {
+                session.balance -= cost;
+                const newOrder = { 
+                    id: Math.floor(Math.random()*99999),
+                    srv: document.getElementById('srv-select').value, 
+                    qty: document.getElementById('srv-qty').value, 
+                    cost: cost.toFixed(2), 
+                    status: 'Processing' 
+                };
+                session.orders.unshift(newOrder);
+                sync(); render(); 
+                
+                alert("Order Lag gaya! 2 minute mein followers badhne shuru ho jayenge.");
+                
+                // Fake Simulation Logic
+                setTimeout(() => {
+                    newOrder.status = "Completed";
+                    sync(); render();
+                }, 15000); // 15 seconds baad Completed ho jayega
+
+            } else { 
+                alert("Paise kam hain! QR Scan karke recharge karein."); 
+                switchTab('add-funds');
             }
         }
-    }
-</script>
 
-<style>
-.gradient-text{
-    background: linear-gradient(to right, #6366f1, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.glass-panel{
-    background: rgba(30,41,59,0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-.service-card:hover{
-    transform: translateY(-5px);
-    box-shadow:0 10px 25px -5px rgba(99,102,241,0.4);
-}
-.no-scrollbar::-webkit-scrollbar{
-    display:none;
-}
-.modal{
-    position: fixed;
-    inset:0;
-    background:rgba(0,0,0,0.7);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:50;
-}
-.modal-content{
-    background:#1e293b;
-    padding:2rem;
-    border-radius:1rem;
-    max-width:400px;
-    width:90%;
-}
-</style>
-</head>
-<body class="bg-slate-900 text-white font-sans antialiased overflow-x-hidden">
+        function openAdmin() { if(prompt("Pass?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
+        
+        function adminAdd() {
+            const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
+            let idx = users.findIndex(u => u.email === email);
+            if(idx !== -1) {
+                users[idx].balance += amt;
+                localStorage.setItem('deepak_users', JSON.stringify(users));
+                if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
+                alert("Paisa Add ho gaya!"); render();
+            } else { alert("User nahi mila!"); }
+        }
 
-<!-- NAVIGATION -->
-<nav class="fixed w-full z-50 glass-panel border-b border-slate-700">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between h-16 items-center">
-<div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
-<i class="fa-solid fa-bolt text-brand-primary text-2xl"></i>
-<span class="font-bold text-xl tracking-wide">Deepak<span class="text-brand-primary">AI</span></span>
-</div>
+        function whatsappPay() {
+            const utr = document.getElementById('utr-input').value;
+            if(!utr) return alert("UTR ID daaliye!");
+            const phone = "919250996142";
+            const msg = `Payment Done!%0AEmail: ${session.email}%0AUTR: ${utr}`;
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
 
-<div class="hidden md:flex space-x-8 items-center">
-<a href="#" onclick="showPage('home')" class="hover:text-brand-primary transition">Home</a>
-<a href="#services" onclick="showPage('home')" class="hover:text-brand-primary transition">Services</a>
-<a href="#pricing" onclick="showPage('home')" class="hover:text-brand-primary transition">API</a>
-<a href="#contact" onclick="showPage('home')" class="hover:text-brand-primary transition">Support</a>
-</div>
+        function sync() {
+            localStorage.setItem('deepak_session', JSON.stringify(session));
+            let i = users.findIndex(u => u.email === session.email);
+            users[i] = session;
+            localStorage.setItem('deepak_users', JSON.stringify(users));
+        }
 
-<div class="hidden md:flex items-center space-x-4">
-<button onclick="openModal('loginModal')" class="text-sm font-semibold hover:text-brand-primary">Log In</button>
-<button onclick="openModal('registerModal')" class="bg-brand-primary hover:bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-lg shadow-indigo-500/30">
-Register
-</button>
-<button onclick="showPage('dashboard')" id="dashBtn" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-600 px-4 py-2 rounded-lg text-sm">
-<i class="fa-solid fa-user-circle mr-2"></i> Dashboard
-</button>
-</div>
-
-<div class="md:hidden flex items-center">
-<button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
-<i class="fa-solid fa-bars text-2xl"></i>
-</button>
-</div>
-</div>
-</div>
-
-<div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700">
-<a href="#" onclick="showPage('home')" class="block px-4 py-3 hover:bg-slate-700">Home</a>
-<a href="#services" class="block px-4 py-3 hover:bg-slate-700">Services</a>
-<a href="#pricing" class="block px-4 py-3 hover:bg-slate-700">API & Pricing</a>
-<div class="border-t border-slate-700 pt-4 pb-2 px-4">
-<button onclick="openModal('loginModal')" class="block w-full text-left py-2">Log In</button>
-<button onclick="openModal('registerModal')" class="block w-full text-left py-2 text-brand-primary font-bold">Register</button>
-</div>
-</div>
-</nav>
-
-<!-- HOME PAGE -->
-<div id="home-page">
-<section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-<h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-Boost Your Social Media <br>
-<span class="gradient-text">Instantly with Deepak AI</span>
-</h1>
-<p class="text-slate-400 text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
-The #1 SMM Panel for Resellers and Individual creators. Automated services, cheap prices, and 24/7 support.
-</p>
-<div class="flex flex-col sm:flex-row justify-center gap-4">
-<button onclick="openModal('registerModal')" class="bg-gradient-to-r from-brand-primary to-purple-600 hover:from-indigo-600 hover:to-purple-700 px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-indigo-500/40 transition transform hover:scale-105">
-Get Started Now
-</button>
-<button onclick="showPage('dashboard')" class="glass-panel hover:bg-slate-800 px-8 py-4 rounded-full font-bold text-lg transition border border-slate-600">
-View Live Demo
-</button>
-</div>
-</div>
-</section>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard-page" class="hidden pt-32 text-center max-w-7xl mx-auto px-4">
-<h1 class="text-5xl font-bold mb-6">Dashboard</h1>
-<p class="text-slate-400 mb-10" id="welcomeMsg"></p>
-<button onclick="showPage('home')" class="bg-purple-500 px-6 py-3 rounded-full font-bold hover:bg-indigo-600">Back to Home</button>
-</div>
-
-<!-- MODALS -->
-<div id="registerModal" class="modal">
-<div class="modal-content">
-<h2 class="text-2xl font-bold mb-4">Register</h2>
-<form id="registerForm" class="flex flex-col gap-4">
-<input type="text" placeholder="Name" required class="p-3 rounded bg-slate-700 border border-slate-600">
-<input type="email" placeholder="Email" required class="p-3 rounded bg-slate-700 border border-slate-600">
-<input type="password" placeholder="Password" required class="p-3 rounded bg-slate-700 border border-slate-600">
-<button type="submit" class="bg-brand-primary px-4 py-3 rounded text-white font-bold hover:bg-indigo-600">Register</button>
-<button type="button" onclick="closeModal('registerModal')" class="mt-2 text-sm text-slate-400 hover:text-white">Cancel</button>
-</form>
-</div>
-</div>
-
-<div id="loginModal" class="modal">
-<div class="modal-content">
-<h2 class="text-2xl font-bold mb-4">Login</h2>
-<form id="loginForm" class="flex flex-col gap-4">
-<input type="email" placeholder="Email" required class="p-3 rounded bg-slate-700 border border-slate-600">
-<input type="password" placeholder="Password" required class="p-3 rounded bg-slate-700 border border-slate-600">
-<button type="submit" class="bg-brand-primary px-4 py-3 rounded text-white font-bold hover:bg-indigo-600">Login</button>
-<button type="button" onclick="closeModal('loginModal')" class="mt-2 text-sm text-slate-400 hover:text-white">Cancel</button>
-</form>
-</div>
-</div>
-
-<script>
-// MODAL FUNCTIONS
-function openModal(id){document.getElementById(id).style.display='flex'}
-function closeModal(id){document.getElementById(id).style.display='none'}
-
-// SHOW PAGES
-function showPage(id){
-    const home=document.getElementById('home-page');
-    const dash=document.getElementById('dashboard-page');
-    if(id==='home'){home.style.display='block'; dash.style.display='none';}
-    else if(id==='dashboard'){
-        home.style.display='none'; dash.style.display='block';
-        const name=localStorage.getItem('userName')||'User';
-        document.getElementById('welcomeMsg').innerText=`Welcome, ${name}! This is your dashboard.`;
-    }
-}
-
-// MOBILE MENU
-document.getElementById('mobile-menu-btn')?.addEventListener('click',()=>{
-    document.getElementById('mobile-menu').classList.toggle('hidden');
-});
-
-// REGISTER
-document.getElementById('registerForm').addEventListener('submit',e=>{
-    e.preventDefault();
-    const name=e.target[0].value;
-    const email=e.target[1].value;
-    const pass=e.target[2].value;
-    localStorage.setItem('userName',name);
-    localStorage.setItem('userEmail',email);
-    localStorage.setItem('userPass',pass);
-    alert(`Welcome ${name}, registration successful!`);
-    closeModal('registerModal');
-    showPage('dashboard');
-    document.getElementById('dashBtn').classList.remove('hidden');
-});
-
-// LOGIN
-document.getElementById('loginForm').addEventListener('submit',e=>{
-    e.preventDefault();
-    const email=e.target[0].value;
-    const pass=e.target[1].value;
-    const storedEmail=localStorage.getItem('userEmail');
-    const storedPass=localStorage.getItem('userPass');
-    if(email===storedEmail && pass===storedPass){
-        alert(`Welcome back!`);
-        closeModal('loginModal');
-        showPage('dashboard');
-        document.getElementById('dashBtn').classList.remove('hidden');
-    }else alert('Invalid credentials!');
-});
-</script>
+        function render() {
+            if(session) {
+                document.getElementById('home-view').classList.add('hidden');
+                document.getElementById('dash-view').classList.remove('hidden');
+                document.getElementById('user-info').classList.remove('hidden');
+                document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
+                document.getElementById('history-list').innerHTML = session.orders.map(o => `
+                    <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
+                        <div><p class="font-bold text-white text-sm">${o.srv}</p><p class="text-[10px] text-slate-500 uppercase tracking-widest">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                        <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
+                    </div>
+                `).join('') || "<p class='text-center py-20 text-slate-600'>No Orders Yet.</p>";
+            }
+        }
+        render(); calcPrice();
+    </script>
 </body>
-</html>
+    </html>
