@@ -6,6 +6,10 @@
     <title>Deepak SMM | India's Professional Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+
     <style>
         body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
@@ -89,7 +93,7 @@
                 </div>
                 <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10 text-center">
                     <h3 class="font-bold text-indigo-400 mb-2">📢 Notice Board</h3>
-                    <p class="text-sm text-slate-500">Gareeb bacha mehnat kar raha hai, please register karne ke baad apna email WhatsApp karein balance add karwane ke liye!</p>
+                    <p class="text-sm text-slate-500">Mehnat kar raha hai bacha, balance add karwane ke liye niche WhatsApp par proof bhein!</p>
                 </div>
             </div>
 
@@ -122,7 +126,7 @@
             <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
             <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
             <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none border border-slate-700">
-            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register Now</button>
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register / Login</button>
         </div>
     </div>
 
@@ -133,11 +137,7 @@
                 <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
                 <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
                 <button onclick="adminAdd()" class="w-full bg-indigo-600 py-3 rounded-xl font-bold">ADD BALANCE</button>
-                <div class="h-[1px] bg-slate-700 my-2"></div>
-                <input id="adm-orderid" type="text" placeholder="Order ID (6 Digits)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
-                <button onclick="adminStatusUpdate()" class="w-full bg-green-600 py-3 rounded-xl font-bold uppercase">Complete Order</button>
-                <div class="h-[1px] bg-slate-700 my-2"></div>
-                <button onclick="viewAllUsers()" class="w-full bg-yellow-600 py-3 rounded-xl font-bold text-black">📋 VIEW ALL USERS DATA</button>
+                <button onclick="viewAllUsers()" class="w-full bg-yellow-600 py-3 rounded-xl font-bold text-black mt-2">📋 VIEW ALL USERS DATA</button>
                 <div id="user-list-display" class="mt-4 text-left text-[11px] max-h-40 overflow-y-auto hidden bg-black/50 p-3 rounded-lg border border-slate-700 text-yellow-500 font-mono"></div>
                 <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Close</button>
             </div>
@@ -147,22 +147,44 @@
     <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl hover:opacity-100 transition"><i class="fa-solid fa-gear"></i></div>
 
     <script>
-        let users = JSON.parse(localStorage.getItem('deepak_users')) || [];
-        let session = JSON.parse(localStorage.getItem('deepak_session')) || null;
+        // --- FIREBASE CONFIG (LIVE CONNECTION) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2_FEeqonZMSaoMnd_pjZNFLfBGir4_AE",
+            authDomain: "deepaksmm-dc3ec.firebaseapp.com",
+            projectId: "deepaksmm-dc3ec",
+            storageBucket: "deepaksmm-dc3ec.firebasestorage.app",
+            messagingSenderId: "759682230527",
+            appId: "1:759682230527:web:9d7b0bcdd6e1f0efb044ca",
+            databaseURL: "https://deepaksmm-dc3ec-default-rtdb.firebaseio.com"
+        };
 
-        function registerUser() {
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        let session = null;
+
+        // Auth Logic
+        async function registerUser() {
             const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
             if(!n || !e || !p) return alert("All fields required!");
-            const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
-            users.push(u);
-            localStorage.setItem('deepak_users', JSON.stringify(users));
-            session = u;
-            localStorage.setItem('deepak_session', JSON.stringify(session));
-            location.reload();
+            const userKey = btoa(e).replace(/=/g, "");
+            const snapshot = await db.ref('users/' + userKey).once('value');
+            
+            if(snapshot.exists()) {
+                if(snapshot.val().pass === p) {
+                    localStorage.setItem('deepak_session_email', e);
+                    location.reload();
+                } else { alert("Wrong Password!"); }
+            } else {
+                const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
+                await db.ref('users/' + userKey).set(u);
+                localStorage.setItem('deepak_session_email', e);
+                location.reload();
+            }
         }
 
-        function logout() { localStorage.removeItem('deepak_session'); location.reload(); }
+        function logout() { localStorage.removeItem('deepak_session_email'); location.reload(); }
 
+        // Dashboard Logic
         function switchTab(t) {
             document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
             document.getElementById('section-' + t).classList.remove('hidden');
@@ -178,84 +200,76 @@
             document.getElementById('final-cost').innerText = "₹" + ((q/1000) * r).toFixed(2);
         }
 
-        function placeOrder() {
+        async function placeOrder() {
             const select = document.getElementById('srv-select');
             const r = select.options[select.selectedIndex].dataset.rate;
-            const qty = document.getElementById('srv-qty').value;
+            const qty = document.getElementById('srv-qty').value, url = document.getElementById('srv-url').value;
             const cost = (qty / 1000) * r;
-            const url = document.getElementById('srv-url').value;
-            const service = select.value;
-            if(!url) return alert("Please paste the profile link first!");
+            if(!url) return alert("Please paste the link!");
             if(session.balance >= cost) {
-                session.balance -= cost;
                 const orderId = Math.floor(100000 + Math.random() * 900000);
-                const newOrder = { id: orderId, srv: service, qty: qty, cost: cost.toFixed(2), status: 'Processing', link: url };
-                session.orders.unshift(newOrder);
-                sync(); render(); 
-                const msg = `🚀 *Deepak SMM New Order*%0AOrderID: ${orderId}%0AService: ${service}%0AQty: ${qty}%0ALink: ${url}`;
-                alert(`Order ID #${orderId} Placed! Please notify Admin on WhatsApp.`);
-                window.open(`https://wa.me/919250996142?text=${msg}`, '_blank');
-            } else { alert("Balance low! Please add funds via QR."); switchTab('add-funds'); }
+                const newOrder = { id: orderId, srv: select.value, qty: qty, cost: cost.toFixed(2), status: 'Processing' };
+                let orders = session.orders || [];
+                orders.unshift(newOrder);
+                const userKey = btoa(session.email).replace(/=/g, "");
+                await db.ref('users/' + userKey).update({ balance: (session.balance - cost), orders: orders });
+                alert(`Order #${orderId} Placed!`);
+                window.open(`https://wa.me/919250996142?text=NewOrderID:${orderId}`, '_blank');
+                location.reload();
+            } else { alert("Low Balance!"); switchTab('add-funds'); }
         }
 
+        // Admin Power
         function openAdmin() { if(prompt("Admin Password?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
         
-        function adminAdd() {
+        async function adminAdd() {
             const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
-            let idx = users.findIndex(u => u.email === email);
-            if(idx !== -1) {
-                users[idx].balance += amt;
-                localStorage.setItem('deepak_users', JSON.stringify(users));
-                if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                alert("Balance Successfully Added!"); render();
+            const userKey = btoa(email).replace(/=/g, "");
+            const snapshot = await db.ref('users/' + userKey).once('value');
+            if(snapshot.exists()) {
+                const newBal = (snapshot.val().balance || 0) + amt;
+                await db.ref('users/' + userKey).update({ balance: newBal });
+                alert("Success! Balance Added.");
+                location.reload();
             } else { alert("User Not Found!"); }
         }
 
-        function adminStatusUpdate() {
-            const email = document.getElementById('adm-email').value, orderId = document.getElementById('adm-orderid').value;
-            let uIdx = users.findIndex(u => u.email === email);
-            if(uIdx !== -1) {
-                let oIdx = users[uIdx].orders.findIndex(o => o.id == orderId);
-                if(oIdx !== -1) {
-                    users[uIdx].orders[oIdx].status = "Completed";
-                    localStorage.setItem('deepak_users', JSON.stringify(users));
-                    if(session && session.email === email) { session.orders = users[uIdx].orders; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                    alert("Order Completed!"); location.reload();
-                } else { alert("Order ID not found for this user!"); }
-            } else { alert("User Email not found!"); }
+        async function viewAllUsers() {
+            const display = document.getElementById('user-list-display');
+            display.classList.toggle('hidden');
+            const snapshot = await db.ref('users').once('value');
+            const data = snapshot.val();
+            let html = "";
+            for(let key in data) { html += `👤 ${data[key].name} | 💰 ₹${data[key].balance}<br>📧 ${data[key].email}<br>---<br>`; }
+            display.innerHTML = html || "No users yet.";
         }
 
-        function viewAllUsers() {
-            const listDiv = document.getElementById('user-list-display');
-            listDiv.classList.toggle('hidden');
-            let userData = users.map(u => `👤 ${u.name}<br>📧 ${u.email}<br>💰 Bal: ₹${u.balance.toFixed(2)}<br>--------------------`).join('<br>');
-            listDiv.innerHTML = userData || "No users registered yet!";
-        }
+        function whatsappPay() { window.open(`https://wa.me/919250996142?text=PaymentProof:UTR:${document.getElementById('utr-input').value}`, '_blank'); }
 
-        function whatsappPay() {
-            const utr = document.getElementById('utr-input').value;
-            if(!utr) return alert("UTR ID Required!");
-            window.open(`https://wa.me/919250996142?text=Payment Done! UTR: ${utr} Email: ${session.email}`, '_blank');
-        }
-
-        function sync() { localStorage.setItem('deepak_session', JSON.stringify(session)); let i = users.findIndex(u => u.email === session.email); if(i!==-1) users[i] = session; localStorage.setItem('deepak_users', JSON.stringify(users)); }
-
-        function render() {
-            if(session) {
-                document.getElementById('home-view').classList.add('hidden');
-                document.getElementById('dash-view').classList.remove('hidden');
-                document.getElementById('user-info').classList.remove('hidden');
-                document.getElementById('news-bar').classList.remove('hidden');
-                document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
-                document.getElementById('history-list').innerHTML = session.orders.map(o => `
-                    <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
-                        <div><p class="font-bold text-white text-sm">#${o.id} - ${o.srv}</p><p class="text-[10px] text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
-                        <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
-                    </div>
-                `).join('') || "<p class='text-center py-10 text-slate-600'>No orders yet.</p>";
+        // Start App
+        async function init() {
+            const email = localStorage.getItem('deepak_session_email');
+            if(email) {
+                const userKey = btoa(email).replace(/=/g, "");
+                const snapshot = await db.ref('users/' + userKey).once('value');
+                if(snapshot.exists()) {
+                    session = snapshot.val();
+                    document.getElementById('home-view').classList.add('hidden');
+                    document.getElementById('dash-view').classList.remove('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+                    document.getElementById('news-bar').classList.remove('hidden');
+                    document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
+                    const ords = session.orders || [];
+                    document.getElementById('history-list').innerHTML = ords.map(o => `
+                        <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
+                            <div><p class="font-bold text-white text-sm">#${o.id} - ${o.srv}</p><p class="text-[10px] text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                            <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
+                        </div>
+                    `).join('') || "<p class='text-center py-10 text-slate-600'>No orders yet.</p>";
+                }
             }
         }
-        render(); calcPrice();
+        init(); calcPrice();
     </script>
 </body>
 </html>
