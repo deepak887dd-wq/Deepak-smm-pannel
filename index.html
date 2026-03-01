@@ -3,259 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak SMM | India's Professional Panel</title>
+    <title>Deepak SMM | Professional Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+
     <style>
-        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-grad { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
+        .btn-grad { background: linear-gradient(90deg, #6366f1, #ec4899); }
         .hidden { display: none !important; }
-        .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .processing { animation: pulse 1.5s infinite; color: #fbbf24; }
-        @keyframes slide { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-        .marquee { overflow: hidden; white-space: nowrap; background: rgba(99, 102, 241, 0.1); padding: 8px 0; border-bottom: 1px solid rgba(99, 102, 241, 0.2); }
-        .marquee p { display: inline-block; animation: slide 15s linear infinite; font-weight: 600; font-size: 14px; color: #818cf8; }
     </style>
 </head>
 <body>
 
-    <div class="bg-gradient-to-r from-red-600 to-indigo-600 text-white text-center py-2 px-4 font-bold text-xs md:text-sm animate-pulse z-[60] relative">
-        🎁 DEEPAK SMM OFFER: Get 10% Extra on ₹500+ Deposit! 🚀
-    </div>
-
     <nav class="sticky top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-slate-800">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
+        <div class="flex items-center gap-2">
             <i class="fa-solid fa-bolt text-indigo-500 text-2xl"></i>
-            <span class="font-bold text-xl uppercase tracking-tighter text-white">Deepak<span class="text-indigo-500">SMM</span></span>
+            <span class="font-bold text-xl uppercase text-white">Deepak<span class="text-indigo-500">SMM</span></span>
         </div>
         <div id="user-info" class="hidden flex items-center gap-4">
-            <span id="top-balance" class="bg-indigo-500/10 px-3 py-1 rounded-full text-green-400 font-bold border border-green-500/20">₹0.00</span>
-            <button onclick="logout()" class="text-slate-400 hover:text-red-400"><i class="fa-solid fa-power-off"></i></button>
+            <span id="top-balance" class="text-green-400 font-bold">₹0.00</span>
+            <button onclick="logout()" class="text-slate-400"><i class="fa-solid fa-power-off"></i></button>
         </div>
     </nav>
 
-    <div id="news-bar" class="hidden marquee">
-        <p>🔥 New Low-Cost Instagram Services Added! | 📺 YouTube Fast Servers are Live! | 🚀 Trusted SMM Services by Deepak Bhai.</p>
-    </div>
-
-    <main class="pt-10 pb-10 px-4 max-w-5xl mx-auto">
+    <main class="pt-10 px-4 max-w-5xl mx-auto">
         <div id="home-view" class="text-center py-20">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 italic">Deepak <span class="text-indigo-500">SMM</span></h1>
-            <p class="text-slate-400 mb-10 text-lg">Instant Delivery. Real Quality. Premium Support.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl shadow-xl">Get Started</button>
-                <button onclick="window.open('https://wa.me/919250996142', '_blank')" class="bg-slate-800 border border-slate-700 px-12 py-5 rounded-2xl font-black text-xl hover:bg-slate-700">Contact Admin</button>
-            </div>
+            <h1 class="text-5xl font-black mb-6">Deepak <span class="text-indigo-500">SMM</span></h1>
+            <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl">Get Started</button>
         </div>
 
         <div id="dash-view" class="hidden">
-            <div class="flex gap-8 border-b border-slate-800 mb-8 overflow-x-auto no-scrollbar">
-                <button onclick="switchTab('new-order')" id="tab-new-order" class="pb-4 active-tab whitespace-nowrap">New Order</button>
-                <button onclick="switchTab('add-funds')" id="tab-add-funds" class="pb-4 text-slate-500 font-bold whitespace-nowrap">Add Funds (QR)</button>
-                <button onclick="switchTab('history')" id="tab-history" class="pb-4 text-slate-500 whitespace-nowrap">My Orders</button>
-                <button onclick="switchTab('support')" id="tab-support" class="pb-4 text-slate-500 font-bold whitespace-nowrap text-indigo-400">Help & Support</button>
-            </div>
-
-            <div id="section-new-order" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="glass p-8 rounded-3xl border border-indigo-500/10">
-                    <h2 class="text-2xl font-bold mb-6 italic text-indigo-400">Place Order</h2>
-                    <div class="space-y-4">
-                        <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
-                            <optgroup label="⚡ INSTAGRAM (FAST & NON-DROP)">
-                                <option value="IG Followers Premium" data-rate="65">🚀 Insta Premium Followers (Non-Drop) - ₹65/1k</option>
-                                <option value="IG Likes Super Fast" data-rate="25">⚡ Insta Likes (Instant Start) - ₹25/1k</option>
-                            </optgroup>
-                            <optgroup label="💰 INSTAGRAM (CHEAPEST/LOW COST)">
-                                <option value="IG Followers Budget" data-rate="38">📉 Insta Followers (Budget Mix) - ₹38/1k</option>
-                                <option value="IG Likes Cheap" data-rate="12">❤️ Insta Likes (Eco-Server) - ₹12/1k</option>
-                                <option value="IG Reels Views Viral" data-rate="6">🎬 Reels Views (Bulk Offer) - ₹6/1k</option>
-                            </optgroup>
-                            <optgroup label="🎥 YOUTUBE & TELEGRAM">
-                                <option value="YT Subs Non-Drop" data-rate="1550">🔴 YT Subscribers (Stable) - ₹1550/1k</option>
-                                <option value="YT Watchtime 4k" data-rate="1900">⏳ YT Watchtime (Monetization) - ₹1900/unit</option>
-                                <option value="TG Members Fast" data-rate="70">👥 Telegram Members (Fast) - ₹70/1k</option>
-                            </optgroup>
-                        </select>
-                        <input id="srv-url" type="text" placeholder="Paste Profile/Video Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
-                        <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" oninput="calcPrice()">
-                        <div class="flex justify-between items-center bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/20">
-                            <span class="text-slate-400">Final Price:</span>
-                            <span id="final-cost" class="text-2xl font-black text-white">₹65.00</span>
-                        </div>
-                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg shadow-lg">CONFIRM ORDER</button>
-                    </div>
+            <div class="glass p-8 rounded-3xl border border-indigo-500/10">
+                <h2 class="text-2xl font-bold mb-6 text-indigo-400">Add Balance (QR)</h2>
+                <div class="bg-white p-4 inline-block rounded-2xl mb-4">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-48 h-48">
                 </div>
-                <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10 text-center">
-                    <h3 class="font-bold text-indigo-400 mb-2">📢 Notice Board</h3>
-                    <p class="text-sm text-slate-500">Gareeb bacha mehnat kar raha hai, please register karne ke baad apna email WhatsApp karein balance add karwane ke liye!</p>
-                </div>
-            </div>
-
-            <div id="section-add-funds" class="hidden text-center max-w-lg mx-auto glass p-10 rounded-[2.5rem]">
-                <h2 class="text-2xl font-black mb-2 text-indigo-400 underline">Add Balance</h2>
-                <div class="bg-white p-4 inline-block rounded-2xl mb-8 mt-4">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-64 h-64">
-                </div>
-                <input id="utr-input" type="text" placeholder="Transaction ID (UTR)" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center font-bold">
-                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">SUBMIT PAYMENT PROOF</button>
-            </div>
-
-            <div id="section-history" class="hidden space-y-4">
-                <h2 class="text-xl font-bold mb-4 italic">My Order Records</h2>
-                <div id="history-list"></div>
-            </div>
-
-            <div id="section-support" class="hidden text-center glass p-8 rounded-3xl border border-indigo-500/20 max-w-2xl mx-auto">
-                <h2 class="text-2xl font-bold mb-4 text-indigo-400 italic">24/7 Support</h2>
-                <a href="https://wa.me/919250996142" target="_blank" class="inline-flex items-center gap-3 bg-green-600 px-8 py-4 rounded-2xl font-bold hover:scale-105 transition">
-                    <i class="fa-brands fa-whatsapp text-2xl"></i> Chat on WhatsApp
-                </a>
+                <input id="utr-input" type="text" placeholder="Enter UTR Number" class="w-full bg-slate-900 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black">Submit on WhatsApp</button>
             </div>
         </div>
     </main>
 
     <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
         <div class="glass p-8 rounded-3xl w-full max-w-md border border-slate-700">
-            <h2 class="text-3xl font-bold mb-6 italic text-indigo-400">Join Deepak SMM</h2>
-            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
-            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-400 text-center">Register / Login</h2>
+            <input id="r-name" type="text" placeholder="Full Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <input id="r-email" type="email" placeholder="Gmail" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
             <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none border border-slate-700">
-            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register Now</button>
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Submit</button>
         </div>
     </div>
 
     <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[101] hidden flex items-center justify-center p-6 text-center">
         <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500">
-            <h2 class="text-2xl font-black text-indigo-400 mb-6 uppercase">Admin Panel</h2>
-            <div class="space-y-4">
-                <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
-                <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
-                <button onclick="adminAdd()" class="w-full bg-indigo-600 py-3 rounded-xl font-bold">ADD BALANCE</button>
-                <div class="h-[1px] bg-slate-700 my-2"></div>
-                <input id="adm-orderid" type="text" placeholder="Order ID (6 Digits)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
-                <button onclick="adminStatusUpdate()" class="w-full bg-green-600 py-3 rounded-xl font-bold uppercase">Complete Order</button>
-                <div class="h-[1px] bg-slate-700 my-2"></div>
-                <button onclick="viewAllUsers()" class="w-full bg-yellow-600 py-3 rounded-xl font-bold text-black">📋 VIEW ALL USERS DATA</button>
-                <div id="user-list-display" class="mt-4 text-left text-[11px] max-h-40 overflow-y-auto hidden bg-black/50 p-3 rounded-lg border border-slate-700 text-yellow-500 font-mono"></div>
-                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Close</button>
-            </div>
+            <h2 class="text-xl font-black text-indigo-400 mb-6">ADMIN CLOUD PANEL</h2>
+            <input id="adm-email" type="email" placeholder="User Gmail" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <button onclick="adminAdd()" class="w-full bg-indigo-600 py-3 rounded-xl font-bold mb-4">ADD BALANCE</button>
+            <button onclick="viewAllUsers()" class="w-full bg-yellow-600 py-3 rounded-xl font-bold text-black mb-4 uppercase">View All Registered Users</button>
+            <div id="user-list-display" class="mt-4 text-left text-xs max-h-40 overflow-y-auto hidden bg-black p-3 rounded-lg text-yellow-500 font-mono"></div>
+            <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="mt-4 text-slate-500">Close</button>
         </div>
     </div>
 
-    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl hover:opacity-100 transition"><i class="fa-solid fa-gear"></i></div>
+    <div onclick="openAdmin()" class="fixed bottom-4 right-4 opacity-20 cursor-pointer text-xl"><i class="fa-solid fa-gear"></i></div>
 
     <script>
-        let users = JSON.parse(localStorage.getItem('deepak_users')) || [];
-        let session = JSON.parse(localStorage.getItem('deepak_session')) || null;
+        // AAPKA FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2_FEeqonZMSaoMnd_pjZNFLfBGir4_AE",
+            authDomain: "deepaksmm-dc3ec.firebaseapp.com",
+            projectId: "deepaksmm-dc3ec",
+            storageBucket: "deepaksmm-dc3ec.firebasestorage.app",
+            messagingSenderId: "759682230527",
+            appId: "1:759682230527:web:9d7b0bcdd6e1f0efb044ca",
+            databaseURL: "https://deepaksmm-dc3ec-default-rtdb.firebaseio.com"
+        };
 
-        function registerUser() {
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        async function registerUser() {
             const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
-            if(!n || !e || !p) return alert("All fields required!");
-            const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
-            users.push(u);
-            localStorage.setItem('deepak_users', JSON.stringify(users));
-            session = u;
-            localStorage.setItem('deepak_session', JSON.stringify(session));
-            location.reload();
+            if(!e || !p) return alert("Email & Pass required!");
+            const userKey = btoa(e).replace(/=/g, "");
+            const snapshot = await db.ref('users/' + userKey).once('value');
+            if(snapshot.exists()) {
+                if(snapshot.val().pass === p) {
+                    localStorage.setItem('deepak_session_email', e);
+                    location.reload();
+                } else { alert("Wrong Password!"); }
+            } else {
+                await db.ref('users/' + userKey).set({ name: n, email: e, pass: p, balance: 0.00 });
+                localStorage.setItem('deepak_session_email', e);
+                location.reload();
+            }
         }
 
-        function logout() { localStorage.removeItem('deepak_session'); location.reload(); }
-
-        function switchTab(t) {
-            document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
-            document.getElementById('section-' + t).classList.remove('hidden');
-            document.querySelectorAll('[id^="tab-"]').forEach(b => { b.classList.remove('active-tab'); b.classList.add('text-slate-500'); });
-            document.getElementById('tab-' + t).classList.add('active-tab');
-            document.getElementById('tab-' + t).classList.remove('text-slate-500');
-        }
-
-        function calcPrice() {
-            const select = document.getElementById('srv-select');
-            const r = select.options[select.selectedIndex].dataset.rate;
-            const q = document.getElementById('srv-qty').value;
-            document.getElementById('final-cost').innerText = "₹" + ((q/1000) * r).toFixed(2);
-        }
-
-        function placeOrder() {
-            const select = document.getElementById('srv-select');
-            const r = select.options[select.selectedIndex].dataset.rate;
-            const qty = document.getElementById('srv-qty').value;
-            const cost = (qty / 1000) * r;
-            const url = document.getElementById('srv-url').value;
-            const service = select.value;
-            if(!url) return alert("Please paste the profile link first!");
-            if(session.balance >= cost) {
-                session.balance -= cost;
-                const orderId = Math.floor(100000 + Math.random() * 900000);
-                const newOrder = { id: orderId, srv: service, qty: qty, cost: cost.toFixed(2), status: 'Processing', link: url };
-                session.orders.unshift(newOrder);
-                sync(); render(); 
-                const msg = `🚀 *Deepak SMM New Order*%0AOrderID: ${orderId}%0AService: ${service}%0AQty: ${qty}%0ALink: ${url}`;
-                alert(`Order ID #${orderId} Placed! Please notify Admin on WhatsApp.`);
-                window.open(`https://wa.me/919250996142?text=${msg}`, '_blank');
-            } else { alert("Balance low! Please add funds via QR."); switchTab('add-funds'); }
-        }
-
-        function openAdmin() { if(prompt("Admin Password?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
-        
-        function adminAdd() {
+        async function adminAdd() {
             const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
-            let idx = users.findIndex(u => u.email === email);
-            if(idx !== -1) {
-                users[idx].balance += amt;
-                localStorage.setItem('deepak_users', JSON.stringify(users));
-                if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                alert("Balance Successfully Added!"); render();
+            const userKey = btoa(email).replace(/=/g, "");
+            const userRef = db.ref('users/' + userKey);
+            const snapshot = await userRef.once('value');
+            if(snapshot.exists()) {
+                const currentBal = snapshot.val().balance || 0;
+                await userRef.update({ balance: currentBal + amt });
+                alert("₹" + amt + " added to " + email);
+                location.reload();
             } else { alert("User Not Found!"); }
         }
 
-        function adminStatusUpdate() {
-            const email = document.getElementById('adm-email').value, orderId = document.getElementById('adm-orderid').value;
-            let uIdx = users.findIndex(u => u.email === email);
-            if(uIdx !== -1) {
-                let oIdx = users[uIdx].orders.findIndex(o => o.id == orderId);
-                if(oIdx !== -1) {
-                    users[uIdx].orders[oIdx].status = "Completed";
-                    localStorage.setItem('deepak_users', JSON.stringify(users));
-                    if(session && session.email === email) { session.orders = users[uIdx].orders; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                    alert("Order Completed!"); location.reload();
-                } else { alert("Order ID not found for this user!"); }
-            } else { alert("User Email not found!"); }
+        async function viewAllUsers() {
+            const display = document.getElementById('user-list-display');
+            display.classList.toggle('hidden');
+            const snapshot = await db.ref('users').once('value');
+            const data = snapshot.val();
+            let html = "";
+            for(let key in data) { html += `👤 ${data[key].name} | 📧 ${data[key].email} | 🔑 ${data[key].pass} | 💰 ₹${data[key].balance}<br><br>`; }
+            display.innerHTML = html || "No users yet.";
         }
 
-        function viewAllUsers() {
-            const listDiv = document.getElementById('user-list-display');
-            listDiv.classList.toggle('hidden');
-            let userData = users.map(u => `👤 ${u.name}<br>📧 ${u.email}<br>💰 Bal: ₹${u.balance.toFixed(2)}<br>--------------------`).join('<br>');
-            listDiv.innerHTML = userData || "No users registered yet!";
-        }
+        function openAdmin() { if(prompt("Admin Password?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
+        function logout() { localStorage.removeItem('deepak_session_email'); location.reload(); }
+        function whatsappPay() { window.open(`https://wa.me/919250996142?text=PaymentUTR:${document.getElementById('utr-input').value}`, '_blank'); }
 
-        function whatsappPay() {
-            const utr = document.getElementById('utr-input').value;
-            if(!utr) return alert("UTR ID Required!");
-            window.open(`https://wa.me/919250996142?text=Payment Done! UTR: ${utr} Email: ${session.email}`, '_blank');
-        }
-
-        function sync() { localStorage.setItem('deepak_session', JSON.stringify(session)); let i = users.findIndex(u => u.email === session.email); if(i!==-1) users[i] = session; localStorage.setItem('deepak_users', JSON.stringify(users)); }
-
-        function render() {
-            if(session) {
-                document.getElementById('home-view').classList.add('hidden');
-                document.getElementById('dash-view').classList.remove('hidden');
-                document.getElementById('user-info').classList.remove('hidden');
-                document.getElementById('news-bar').classList.remove('hidden');
-                document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
-                document.getElementById('history-list').innerHTML = session.orders.map(o => `
-                    <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
-                        <div><p class="font-bold text-white text-sm">#${o.id} - ${o.srv}</p><p class="text-[10px] text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
-                        <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
-                    </div>
-                `).join('') || "<p class='text-center py-10 text-slate-600'>No orders yet.</p>";
+        async function init() {
+            const email = localStorage.getItem('deepak_session_email');
+            if(email) {
+                const snapshot = await db.ref('users/' + btoa(email).replace(/=/g, "")).once('value');
+                if(snapshot.exists()) {
+                    const session = snapshot.val();
+                    document.getElementById('home-view').classList.add('hidden');
+                    document.getElementById('dash-view').classList.remove('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+                    document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
+                }
             }
         }
-        render(); calcPrice();
+        init();
     </script>
 </body>
 </html>
