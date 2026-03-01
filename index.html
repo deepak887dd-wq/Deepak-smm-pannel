@@ -52,14 +52,23 @@
                     <h2 class="text-2xl font-bold mb-6 italic text-indigo-400">Place Order</h2>
                     <div class="space-y-4">
                         <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
-                            <optgroup label="INSTAGRAM">
-                                <option value="IG Followers Premium" data-rate="55">Insta Followers (Non-Drop) - ₹55/1k</option>
-                                <option value="IG Likes Real" data-rate="18">Insta Likes (Real) - ₹18/1k</option>
-                                <option value="IG Reels Views" data-rate="8">Insta Reels Views (Fast) - ₹8/1k</option>
+                            <optgroup label="📸 INSTAGRAM SERVICES">
+                                <option value="IG Followers Premium" data-rate="55">🚀 Insta Followers (Non-Drop) - ₹55/1k</option>
+                                <option value="IG Likes Real" data-rate="18">❤️ Insta Likes (Real) - ₹18/1k</option>
+                                <option value="IG Reels Views" data-rate="8">🎬 Insta Reels Views (Fast) - ₹8/1k</option>
+                                <option value="IG Comments" data-rate="120">💬 Insta Custom Comments - ₹120/1k</option>
                             </optgroup>
-                            <optgroup label="YOUTUBE">
-                                <option value="YT Subs" data-rate="1470">YouTube Subscribers - ₹1470/1k</option>
-                                <option value="YT Watch" data-rate="1870">YouTube Watchtime - ₹1870/unit</option>
+                            <optgroup label="🎥 YOUTUBE SERVICES">
+                                <option value="YT Subs" data-rate="1470">🔴 YouTube Subscribers - ₹1470/1k</option>
+                                <option value="YT Watchtime" data-rate="1870">⏳ YouTube Watchtime - ₹1870/unit</option>
+                                <option value="YT Video Likes" data-rate="150">👍 YouTube Video Likes - ₹150/1k</option>
+                            </optgroup>
+                            <optgroup label="✈️ TELEGRAM SERVICES">
+                                <option value="TG Members Global" data-rate="65">👥 Telegram Members (Global) - ₹65/1k</option>
+                                <option value="TG Post Views" data-rate="5">👁️ Telegram Post Views - ₹5/1k</option>
+                            </optgroup>
+                            <optgroup label="🔵 FACEBOOK SERVICES">
+                                <option value="FB Page Likes" data-rate="110">🚩 FB Page Likes & Follow - ₹110/1k</option>
                             </optgroup>
                         </select>
                         <input id="srv-url" type="text" placeholder="Paste Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
@@ -128,6 +137,7 @@
     <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl"><i class="fa-solid fa-gear"></i></div>
 
     <script>
+        // ... (Poora wahi JavaScript logic jo pichle code mein tha) ...
         let users = JSON.parse(localStorage.getItem('deepak_users')) || [];
         let session = JSON.parse(localStorage.getItem('deepak_session')) || null;
 
@@ -164,7 +174,6 @@
             const cost = (qty / 1000) * r;
             const url = document.getElementById('srv-url').value;
             const service = document.getElementById('srv-select').value;
-            
             if(!url) return alert("Paste Link First!");
             if(session.balance >= cost) {
                 session.balance -= cost;
@@ -172,7 +181,6 @@
                 const newOrder = { id: orderId, srv: service, qty: qty, cost: cost.toFixed(2), status: 'Processing', link: url };
                 session.orders.unshift(newOrder);
                 sync(); render(); 
-
                 const msg = `🚀 *New Order*%0AOrderID: ${orderId}%0AService: ${service}%0AQty: ${qty}%0ALink: ${url}`;
                 alert(`Order ID #${orderId} Placed! Please notify Admin on WhatsApp.`);
                 window.open(`https://wa.me/919250996142?text=${msg}`, '_blank');
@@ -180,7 +188,6 @@
         }
 
         function openAdmin() { if(prompt("Pass?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
-        
         function adminAdd() {
             const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
             let idx = users.findIndex(u => u.email === email);
