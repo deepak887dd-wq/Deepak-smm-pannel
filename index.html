@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak AI SMM Panel | India's Best SMM Services</title>
+    <title>Deepak AI SMM Panel | Best Social Media Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,104 +15,142 @@
     <style>
         .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .gradient-text { background: linear-gradient(to right, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+        .btn-grad { background: linear-gradient(90deg, #6366f1, #a855f7); }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans overflow-x-hidden">
+<body class="bg-slate-900 text-white font-sans antialiased overflow-x-hidden">
 
     <nav class="fixed w-full z-50 glass-panel border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
                 <i class="fa-solid fa-bolt text-brand-primary text-2xl"></i>
                 <span class="font-bold text-xl tracking-wide">Deepak<span class="text-brand-primary">AI</span></span>
             </div>
-            <div class="flex items-center gap-4">
-                <button onclick="toggleModal('loginModal')" class="text-sm font-semibold hover:text-brand-primary">Log In</button>
-                <button onclick="toggleModal('registerModal')" class="bg-brand-primary px-5 py-2 rounded-full text-sm font-bold shadow-lg shadow-indigo-500/30">Register</button>
+            <div class="flex items-center gap-4 text-sm font-semibold">
+                <a href="#" onclick="showPage('home')" class="hidden md:block hover:text-brand-primary">Home</a>
+                <button onclick="openModal('loginModal')" id="loginBtnNav">Log In</button>
+                <button onclick="openModal('registerModal')" id="regBtnNav" class="btn-grad px-5 py-2 rounded-full font-bold">Register</button>
+                <button onclick="showPage('dashboard')" id="dashBtn" class="hidden bg-slate-800 px-4 py-2 rounded-lg border border-slate-600">Dashboard</button>
             </div>
         </div>
     </nav>
 
-    <header class="pt-32 pb-16 text-center px-4">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6">Boost Social Media <br><span class="gradient-text">Instantly & Cheap</span></h1>
-        <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">High Quality Followers, Likes, and Views. India's Most Trusted SMM Panel.</p>
-        <button onclick="toggleModal('registerModal')" class="bg-brand-primary px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition shadow-xl">Get Started Now</button>
-    </header>
+    <div id="home-page">
+        <section class="pt-32 pb-20 text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">Boost Your Social Media <br><span class="gradient-text">Instantly & Securely</span></h1>
+            <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">India's Fastest SMM Panel. Real Followers, Likes, and Views with 24/7 Support.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="openModal('registerModal')" class="btn-grad px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition">Get Started Now</button>
+                <a href="#services" class="glass-panel px-10 py-4 rounded-xl font-bold text-lg border border-slate-600 flex items-center justify-center">View Services</a>
+            </div>
+        </section>
 
-    <section id="services" class="max-w-6xl mx-auto py-10 px-4">
-        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
-            <i class="fa-solid fa-fire text-orange-500"></i> Hot Services
-        </h2>
-        <div class="overflow-x-auto glass-panel rounded-2xl border border-slate-700">
-            <table class="w-full text-left">
-                <thead class="bg-slate-800 text-slate-300 uppercase text-xs">
-                    <tr>
-                        <th class="p-5">ID</th>
-                        <th class="p-5">Service Name</th>
-                        <th class="p-5">Rate per 1k</th>
-                        <th class="p-5">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-700">
-                    <tr class="hover:bg-slate-800/50">
-                        <td class="p-5 text-brand-primary">#451</td>
-                        <td class="p-5">Instagram Followers [Real + Non Drop]</td>
-                        <td class="p-5 text-green-400 font-bold">₹55.00</td>
-                        <td class="p-5"><button onclick="toggleModal('loginModal')" class="bg-indigo-500 px-4 py-1 rounded text-xs font-bold">Buy</button></td>
-                    </tr>
-                    <tr class="hover:bg-slate-800/50">
-                        <td class="p-5 text-brand-primary">#210</td>
-                        <td class="p-5">Instagram Likes [HQ Premium]</td>
-                        <td class="p-5 text-green-400 font-bold">₹15.00</td>
-                        <td class="p-5"><button onclick="toggleModal('loginModal')" class="bg-indigo-500 px-4 py-1 rounded text-xs font-bold">Buy</button></td>
-                    </tr>
-                    <tr class="hover:bg-slate-800/50">
-                        <td class="p-5 text-brand-primary">#882</td>
-                        <td class="p-5">YouTube Watchtime [4000 Hours Pack]</td>
-                        <td class="p-5 text-green-400 font-bold">₹820.00</td>
-                        <td class="p-5"><button onclick="toggleModal('loginModal')" class="bg-indigo-500 px-4 py-1 rounded text-xs font-bold">Buy</button></td>
-                    </tr>
-                    <tr class="hover:bg-slate-800/50">
-                        <td class="p-5 text-brand-primary">#331</td>
-                        <td class="p-5">Telegram Channel Members [Global]</td>
-                        <td class="p-5 text-green-400 font-bold">₹65.00</td>
-                        <td class="p-5"><button onclick="toggleModal('loginModal')" class="bg-indigo-500 px-4 py-1 rounded text-xs font-bold">Buy</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <footer class="py-10 text-center text-slate-500 border-t border-slate-800 mt-20">
-        <p>© 2026 Deepak AI - Powered by India's Best SMM Panel</p>
-    </footer>
-
-    <div id="loginModal" class="modal">
-        <div class="bg-slate-800 p-8 rounded-2xl w-full max-w-sm border border-slate-700">
-            <h2 class="text-2xl font-bold mb-6">Login</h2>
-            <input type="text" placeholder="Username" class="w-full bg-slate-900 p-3 rounded-lg mb-4 border border-slate-700 outline-none">
-            <input type="password" placeholder="Password" class="w-full bg-slate-900 p-3 rounded-lg mb-6 border border-slate-700 outline-none">
-            <button onclick="location.href='https://wa.me/91XXXXXXXXXX'" class="bg-brand-primary w-full py-3 rounded-lg font-bold mb-4">Login</button>
-            <button onclick="toggleModal('loginModal')" class="text-sm text-slate-400">Cancel</button>
-        </div>
+        <section id="services" class="max-w-6xl mx-auto py-10 px-4">
+            <h2 class="text-3xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-fire text-orange-500"></i> Hot Services (Prices with Margin)</h2>
+            <div class="overflow-x-auto glass-panel rounded-2xl border border-slate-700">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-800 text-slate-300 text-xs uppercase">
+                        <tr><th class="p-5">Service Name</th><th class="p-5">Rate (per 1k)</th><th class="p-5">Action</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-700">
+                        <tr><td class="p-5">Instagram Followers [Real + Non-Drop]</td><td class="p-5 text-green-400 font-bold">₹55.00</td><td class="p-5"><button onclick="openModal('loginModal')" class="text-brand-primary font-bold underline">Order</button></td></tr>
+                        <tr><td class="p-5">Instagram Likes [HQ Premium]</td><td class="p-5 text-green-400 font-bold">₹18.00</td><td class="p-5"><button onclick="openModal('loginModal')" class="text-brand-primary font-bold underline">Order</button></td></tr>
+                        <tr><td class="p-5">YouTube Watchtime [Non-Drop Pack]</td><td class="p-5 text-green-400 font-bold">₹820.00</td><td class="p-5"><button onclick="openModal('loginModal')" class="text-brand-primary font-bold underline">Order</button></td></tr>
+                        <tr><td class="p-5">Telegram Members [Lifetime Refill]</td><td class="p-5 text-green-400 font-bold">₹65.00</td><td class="p-5"><button onclick="openModal('loginModal')" class="text-brand-primary font-bold underline">Order</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 
-    <div id="registerModal" class="modal">
-        <div class="bg-slate-800 p-8 rounded-2xl w-full max-w-sm border border-slate-700">
-            <h2 class="text-2xl font-bold mb-6">Create Account</h2>
-            <input type="text" placeholder="Full Name" class="w-full bg-slate-900 p-3 rounded-lg mb-4 border border-slate-700 outline-none">
-            <input type="email" placeholder="Email Address" class="w-full bg-slate-900 p-3 rounded-lg mb-4 border border-slate-700 outline-none">
-            <input type="password" placeholder="Password" class="w-full bg-slate-900 p-3 rounded-lg mb-6 border border-slate-700 outline-none">
-            <button onclick="location.href='https://wa.me/91XXXXXXXXXX'" class="bg-brand-primary w-full py-3 rounded-lg font-bold mb-4">Register</button>
-            <button onclick="toggleModal('registerModal')" class="text-sm text-slate-400">Cancel</button>
+    <div id="dashboard-page" class="hidden pt-28 max-w-7xl mx-auto px-4 pb-20">
+        <div class="mb-8"><h1 class="text-3xl font-bold" id="welcomeUser">Welcome, User!</h1><p class="text-slate-400">Manage your orders and funds here.</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-indigo-500"><p class="text-slate-400 text-sm">Balance</p><h3 class="text-3xl font-bold">₹0.00</h3></div>
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-pink-500"><p class="text-slate-400 text-sm">Total Spent</p><h3 class="text-3xl font-bold">₹0.00</h3></div>
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-green-500"><p class="text-slate-400 text-sm">Active Orders</p><h3 class="text-3xl font-bold">0</h3></div>
         </div>
+        <div class="glass-panel p-8 rounded-2xl text-center">
+            <h2 class="text-2xl font-bold mb-4">Add Funds</h2>
+            <button onclick="alert('Contact Admin for Payments: +91XXXXXXXXXX')" class="btn-grad px-8 py-3 rounded-xl font-bold">Pay via PhonePe/GPay</button>
+        </div>
+        <button onclick="logout()" class="mt-10 text-slate-500 hover:text-white underline">Logout Account</button>
     </div>
+
+    <div id="registerModal" class="modal"><div class="bg-slate-800 p-8 rounded-2xl w-full max-w-md border border-slate-700">
+        <h2 class="text-2xl font-bold mb-6">Register</h2>
+        <form id="regForm" class="flex flex-col gap-4">
+            <input type="text" id="regName" placeholder="Full Name" required class="p-3 bg-slate-900 rounded-lg border border-slate-700 outline-none">
+            <input type="email" id="regEmail" placeholder="Email" required class="p-3 bg-slate-900 rounded-lg border border-slate-700 outline-none">
+            <input type="password" id="regPass" placeholder="Password" required class="p-3 bg-slate-900 rounded-lg border border-slate-700 outline-none">
+            <button type="submit" class="btn-grad py-3 rounded-lg font-bold mt-2">Create Account</button>
+            <button type="button" onclick="closeModal('registerModal')" class="text-sm text-slate-500 mt-2">Cancel</button>
+        </form>
+    </div></div>
+
+    <div id="loginModal" class="modal"><div class="bg-slate-800 p-8 rounded-2xl w-full max-w-md border border-slate-700">
+        <h2 class="text-2xl font-bold mb-6">Login</h2>
+        <form id="logForm" class="flex flex-col gap-4">
+            <input type="email" id="logEmail" placeholder="Email" required class="p-3 bg-slate-900 rounded-lg border border-slate-700 outline-none">
+            <input type="password" id="logPass" placeholder="Password" required class="p-3 bg-slate-900 rounded-lg border border-slate-700 outline-none">
+            <button type="submit" class="btn-grad py-3 rounded-lg font-bold mt-2">Login Now</button>
+            <button type="button" onclick="closeModal('loginModal')" class="text-sm text-slate-500 mt-2">Cancel</button>
+        </form>
+    </div></div>
 
     <script>
-        function toggleModal(id) {
-            const m = document.getElementById(id);
-            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+        function openModal(id){ document.getElementById(id).style.display='flex'; }
+        function closeModal(id){ document.getElementById(id).style.display='none'; }
+
+        function showPage(id){
+            const home=document.getElementById('home-page');
+            const dash=document.getElementById('dashboard-page');
+            if(id==='home'){ home.classList.remove('hidden'); dash.classList.add('hidden'); }
+            else { home.classList.add('hidden'); dash.classList.remove('hidden'); }
+            window.scrollTo(0,0);
         }
+
+        // REGISTRATION DATA HANDLING (Aapka original system)
+        document.getElementById('regForm').addEventListener('submit', e => {
+            e.preventDefault();
+            localStorage.setItem('userName', document.getElementById('regName').value);
+            localStorage.setItem('userEmail', document.getElementById('regEmail').value);
+            localStorage.setItem('userPass', document.getElementById('regPass').value);
+            alert('Welcome! Registration successful.');
+            closeModal('registerModal');
+            updateUI();
+            showPage('dashboard');
+        });
+
+        // LOGIN SYSTEM
+        document.getElementById('logForm').addEventListener('submit', e => {
+            e.preventDefault();
+            if(document.getElementById('logEmail').value === localStorage.getItem('userEmail') && 
+               document.getElementById('logPass').value === localStorage.getItem('userPass')){
+                updateUI();
+                closeModal('loginModal');
+                showPage('dashboard');
+            } else { alert('Invalid Login!'); }
+        });
+
+        function updateUI(){
+            const name = localStorage.getItem('userName');
+            if(name){
+                document.getElementById('welcomeUser').innerText = `Welcome, ${name}!`;
+                document.getElementById('dashBtn').classList.remove('hidden');
+                document.getElementById('loginBtnNav').classList.add('hidden');
+                document.getElementById('regBtnNav').classList.add('hidden');
+            }
+        }
+
+        function logout(){
+            localStorage.clear();
+            location.reload();
+        }
+
+        // Check if already logged in on load
+        window.onload = updateUI;
     </script>
 </body>
 </html>
