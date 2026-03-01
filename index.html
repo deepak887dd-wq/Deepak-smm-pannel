@@ -30,7 +30,6 @@
     </nav>
 
     <main class="pt-28 pb-10 px-4 max-w-5xl mx-auto">
-        
         <div id="home-view" class="text-center py-20">
             <h1 class="text-5xl md:text-7xl font-black mb-6 italic">Deepak <span class="text-indigo-500">SMM</span></h1>
             <p class="text-slate-400 mb-10 text-lg">Instant Delivery. Real Quality. Premium Support.</p>
@@ -53,17 +52,14 @@
                     <h2 class="text-2xl font-bold mb-6 italic text-indigo-400">Place Order</h2>
                     <div class="space-y-4">
                         <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
-                            <optgroup label="INSTAGRAM (High Quality)">
+                            <optgroup label="INSTAGRAM">
                                 <option value="IG Followers Premium" data-rate="55">Insta Followers (Non-Drop) - ₹55/1k</option>
                                 <option value="IG Likes Real" data-rate="18">Insta Likes (Real) - ₹18/1k</option>
                                 <option value="IG Reels Views" data-rate="8">Insta Reels Views (Fast) - ₹8/1k</option>
                             </optgroup>
-                            <optgroup label="YOUTUBE (Best Rates)">
+                            <optgroup label="YOUTUBE">
                                 <option value="YT Subs" data-rate="1470">YouTube Subscribers - ₹1470/1k</option>
                                 <option value="YT Watch" data-rate="1870">YouTube Watchtime - ₹1870/unit</option>
-                            </optgroup>
-                            <optgroup label="TELEGRAM">
-                                <option value="TG Members" data-rate="65">Telegram Members - ₹65/1k</option>
                             </optgroup>
                         </select>
                         <input id="srv-url" type="text" placeholder="Paste Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
@@ -76,65 +72,54 @@
                     </div>
                 </div>
                 <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10 text-center">
-                    <h3 class="font-bold text-indigo-400 mb-2">Live Status</h3>
-                    <p class="text-xs text-slate-500 mb-4">Orders are processing normally. Current Speed: 10k/hr.</p>
-                    <div class="bg-indigo-500/5 p-4 rounded-xl border border-indigo-500/10">
-                        <p class="text-[10px] text-indigo-300 italic uppercase">Pro Tip: Always use public profile links.</p>
-                    </div>
+                    <h3 class="font-bold text-indigo-400 mb-2">Notice</h3>
+                    <p class="text-xs text-slate-500">Order lagne ke baad details WhatsApp par bhejein.</p>
                 </div>
             </div>
 
             <div id="section-add-funds" class="hidden text-center max-w-lg mx-auto glass p-10 rounded-[2.5rem]">
-                <h2 class="text-2xl font-black mb-2">SCANNER</h2>
+                <h2 class="text-2xl font-black mb-2 text-indigo-400">QR Scanner</h2>
                 <div class="bg-white p-4 inline-block rounded-2xl mb-8">
-                    <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-64 h-64">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-64 h-64">
                 </div>
-                <input id="utr-input" type="text" placeholder="Enter Transaction ID" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center">
-                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">
-                    <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> SUBMIT PROOF
-                </button>
+                <input id="utr-input" type="text" placeholder="Transaction ID" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center">
+                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">SUBMIT PROOF</button>
             </div>
 
             <div id="section-history" class="hidden space-y-4">
-                <h2 class="text-xl font-bold mb-4">Your Recent Orders</h2>
+                <h2 class="text-xl font-bold mb-4">Orders (Manual Control)</h2>
                 <div id="history-list"></div>
             </div>
 
             <div id="section-support" class="hidden text-center glass p-8 rounded-3xl border border-indigo-500/20 max-w-2xl mx-auto">
-                <h2 class="text-2xl font-bold mb-4 italic text-indigo-400">Facing a Problem?</h2>
-                <p class="text-slate-400 mb-8 text-sm">Order cancel ho gaya ya balance add nahi hua? Niche click karke admin se baat karein.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <a href="https://wa.me/919250996142?text=Hello Admin, I need help with my Deepak SMM account." target="_blank" class="flex items-center justify-center gap-3 bg-green-600/20 border border-green-500/50 p-5 rounded-2xl hover:bg-green-600/30 transition">
-                        <i class="fa-brands fa-whatsapp text-3xl text-green-500"></i>
-                        <div class="text-left"><p class="font-bold text-white">WhatsApp</p><p class="text-[10px] text-green-400">Direct Chat</p></div>
-                    </a>
-                    <div class="flex items-center justify-center gap-3 bg-indigo-600/20 border border-indigo-500/50 p-5 rounded-2xl">
-                        <i class="fa-solid fa-clock text-3xl text-indigo-400"></i>
-                        <div class="text-left"><p class="font-bold text-white">Reply Time</p><p class="text-[10px] text-indigo-300">10-30 Mins</p></div>
-                    </div>
-                </div>
+                <h2 class="text-2xl font-bold mb-4 text-indigo-400 italic">24/7 Support</h2>
+                <a href="https://wa.me/919250996142" target="_blank" class="inline-flex items-center gap-3 bg-green-600 px-8 py-4 rounded-2xl font-bold">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> Chat on WhatsApp
+                </a>
             </div>
         </div>
     </main>
 
     <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
         <div class="glass p-8 rounded-3xl w-full max-w-md">
-            <h2 class="text-3xl font-bold mb-6">Create Account</h2>
-            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700 focus:border-indigo-500">
-            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700 focus:border-indigo-500">
-            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none border border-slate-700 focus:border-indigo-500">
-            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register Now</button>
-            <button onclick="document.getElementById('reg-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Cancel</button>
+            <h2 class="text-3xl font-bold mb-6 italic">Register</h2>
+            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
+            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none border border-slate-700">
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register</button>
         </div>
     </div>
 
-    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[101] hidden flex items-center justify-center p-6">
+    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[101] hidden flex items-center justify-center p-6 text-center">
         <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500 shadow-2xl">
-            <h2 class="text-2xl font-black text-indigo-400 mb-6">ADMIN PANEL</h2>
+            <h2 class="text-2xl font-black text-indigo-400 mb-6 uppercase">Admin Control</h2>
             <div class="space-y-4">
                 <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
                 <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
                 <button onclick="adminAdd()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold">ADD BALANCE</button>
+                <div class="h-[1px] bg-slate-700 my-4"></div>
+                <input id="adm-orderid" type="text" placeholder="Order ID" class="w-full bg-slate-800 p-4 rounded-xl outline-none">
+                <button onclick="adminStatusUpdate()" class="w-full bg-green-600 py-4 rounded-xl font-bold uppercase">Complete Order</button>
                 <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Close</button>
             </div>
         </div>
@@ -148,7 +133,7 @@
 
         function registerUser() {
             const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
-            if(!n || !e || !p) return alert("Pehle sab bhariye!");
+            if(!n || !e || !p) return alert("All fields required!");
             const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
             users.push(u);
             localStorage.setItem('deepak_users', JSON.stringify(users));
@@ -175,20 +160,27 @@
 
         function placeOrder() {
             const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
-            const cost = (document.getElementById('srv-qty').value / 1000) * r;
+            const qty = document.getElementById('srv-qty').value;
+            const cost = (qty / 1000) * r;
             const url = document.getElementById('srv-url').value;
-            if(!url) return alert("Link kahan hai?");
+            const service = document.getElementById('srv-select').value;
+            
+            if(!url) return alert("Paste Link First!");
             if(session.balance >= cost) {
                 session.balance -= cost;
-                const newOrder = { id: Math.floor(Math.random()*99999), srv: document.getElementById('srv-select').value, qty: document.getElementById('srv-qty').value, cost: cost.toFixed(2), status: 'Processing' };
+                const orderId = Math.floor(100000 + Math.random() * 900000);
+                const newOrder = { id: orderId, srv: service, qty: qty, cost: cost.toFixed(2), status: 'Processing', link: url };
                 session.orders.unshift(newOrder);
                 sync(); render(); 
-                alert("Order Successfully Placed!");
-                setTimeout(() => { newOrder.status = "Completed"; sync(); render(); }, 15000);
-            } else { alert("Insufficient Balance! Scan QR to Recharge."); switchTab('add-funds'); }
+
+                const msg = `🚀 *New Order*%0AOrderID: ${orderId}%0AService: ${service}%0AQty: ${qty}%0ALink: ${url}`;
+                alert(`Order ID #${orderId} Placed! Please notify Admin on WhatsApp.`);
+                window.open(`https://wa.me/919250996142?text=${msg}`, '_blank');
+            } else { alert("Balance low!"); switchTab('add-funds'); }
         }
 
         function openAdmin() { if(prompt("Pass?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
+        
         function adminAdd() {
             const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
             let idx = users.findIndex(u => u.email === email);
@@ -196,16 +188,30 @@
                 users[idx].balance += amt;
                 localStorage.setItem('deepak_users', JSON.stringify(users));
                 if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                alert("Balance Added!"); render();
+                alert("Done!"); render();
+            } else { alert("User Not Found!"); }
+        }
+
+        function adminStatusUpdate() {
+            const email = document.getElementById('adm-email').value;
+            const orderId = document.getElementById('adm-orderid').value;
+            let uIdx = users.findIndex(u => u.email === email);
+            if(uIdx !== -1) {
+                let oIdx = users[uIdx].orders.findIndex(o => o.id == orderId);
+                if(oIdx !== -1) {
+                    users[uIdx].orders[oIdx].status = "Completed";
+                    localStorage.setItem('deepak_users', JSON.stringify(users));
+                    if(session && session.email === email) { session.orders = users[uIdx].orders; localStorage.setItem('deepak_session', JSON.stringify(session)); }
+                    alert("Order Marked Completed!");
+                    location.reload();
+                } else { alert("Order ID Missing!"); }
             } else { alert("User Not Found!"); }
         }
 
         function whatsappPay() {
             const utr = document.getElementById('utr-input').value;
-            if(!utr) return alert("Enter UTR/Transaction ID!");
-            const phone = "919250996142";
-            const msg = `Payment Proof - Deepak SMM%0AEmail: ${session.email}%0AUTR ID: ${utr}`;
-            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+            if(!utr) return alert("UTR ID Required!");
+            window.open(`https://wa.me/919250996142?text=Payment Done! UTR: ${utr} Email: ${session.email}`, '_blank');
         }
 
         function sync() { localStorage.setItem('deepak_session', JSON.stringify(session)); let i = users.findIndex(u => u.email === session.email); users[i] = session; localStorage.setItem('deepak_users', JSON.stringify(users)); }
@@ -218,10 +224,10 @@
                 document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
                 document.getElementById('history-list').innerHTML = session.orders.map(o => `
                     <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
-                        <div><p class="font-bold text-white text-sm">${o.srv}</p><p class="text-[10px] text-slate-500 uppercase">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                        <div><p class="font-bold text-white text-sm">ID #${o.id} - ${o.srv}</p><p class="text-[10px] text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
                         <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
                     </div>
-                `).join('') || "<p class='text-center py-20 text-slate-600'>No Orders Found.</p>";
+                `).join('') || "<p class='text-center py-20 text-slate-600'>No Orders Yet.</p>";
             }
         }
         render(); calcPrice();
