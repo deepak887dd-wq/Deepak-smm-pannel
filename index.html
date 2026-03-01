@@ -46,7 +46,7 @@
 
     <main class="pt-10 pb-10 px-4 max-w-5xl mx-auto">
         <div id="home-view" class="text-center py-20">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 italic">Deepak <span class="text-indigo-500">SMM</span></h1>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 italic text-white">Deepak <span class="text-indigo-500">SMM</span></h1>
             <p class="text-slate-400 mb-10 text-lg">Instant Delivery. Real Quality. Premium Support.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <button onclick="document.getElementById('reg-modal').classList.remove('hidden')" class="btn-grad px-12 py-5 rounded-2xl font-black text-xl shadow-xl">Get Started</button>
@@ -59,7 +59,6 @@
                 <button onclick="switchTab('new-order')" id="tab-new-order" class="pb-4 active-tab whitespace-nowrap">New Order</button>
                 <button onclick="switchTab('add-funds')" id="tab-add-funds" class="pb-4 text-slate-500 font-bold whitespace-nowrap">Add Funds (QR)</button>
                 <button onclick="switchTab('history')" id="tab-history" class="pb-4 text-slate-500 whitespace-nowrap">My Orders</button>
-                <button onclick="switchTab('support')" id="tab-support" class="pb-4 text-slate-500 font-bold whitespace-nowrap text-indigo-400">Help & Support</button>
             </div>
 
             <div id="section-new-order" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -67,87 +66,73 @@
                     <h2 class="text-2xl font-bold mb-6 italic text-indigo-400">Place Order</h2>
                     <div class="space-y-4">
                         <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
-                            <optgroup label="⚡ INSTAGRAM (FAST & NON-DROP)">
-                                <option value="IG Followers Premium" data-rate="65">🚀 Insta Premium Followers (Non-Drop) - ₹65/1k</option>
-                                <option value="IG Likes Super Fast" data-rate="25">⚡ Insta Likes (Instant Start) - ₹25/1k</option>
+                            <optgroup label="⚡ INSTAGRAM">
+                                <option value="IG Followers Premium" data-rate="65">🚀 Insta Premium Followers - ₹65/1k</option>
+                                <option value="IG Likes Fast" data-rate="25">⚡ Insta Likes Fast - ₹25/1k</option>
                             </optgroup>
-                            <optgroup label="💰 INSTAGRAM (CHEAPEST/LOW COST)">
-                                <option value="IG Followers Budget" data-rate="38">📉 Insta Followers (Budget Mix) - ₹38/1k</option>
-                                <option value="IG Likes Cheap" data-rate="12">❤️ Insta Likes (Eco-Server) - ₹12/1k</option>
-                                <option value="IG Reels Views Viral" data-rate="6">🎬 Reels Views (Bulk Offer) - ₹6/1k</option>
-                            </optgroup>
-                            <optgroup label="🎥 YOUTUBE & TELEGRAM">
-                                <option value="YT Subs Non-Drop" data-rate="1550">🔴 YT Subscribers (Stable) - ₹1550/1k</option>
-                                <option value="YT Watchtime 4k" data-rate="1900">⏳ YT Watchtime (Monetization) - ₹1900/unit</option>
-                                <option value="TG Members Fast" data-rate="70">👥 Telegram Members (Fast) - ₹70/1k</option>
+                            <optgroup label="🎥 OTHER">
+                                <option value="YT Subs Non-Drop" data-rate="1550">🔴 YT Subscribers - ₹1550/1k</option>
+                                <option value="TG Members Fast" data-rate="70">👥 Telegram Members - ₹70/1k</option>
                             </optgroup>
                         </select>
-                        <input id="srv-url" type="text" placeholder="Paste Profile/Video Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
+                        <input id="srv-url" type="text" placeholder="Paste Link..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
                         <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" oninput="calcPrice()">
-                        <div class="flex justify-between items-center bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/20">
-                            <span class="text-slate-400">Final Price:</span>
-                            <span id="final-cost" class="text-2xl font-black text-white">₹65.00</span>
+                        <div class="flex justify-between items-center bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/20 text-white font-black">
+                            <span>Final Price:</span>
+                            <span id="final-cost">₹65.00</span>
                         </div>
-                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg shadow-lg">CONFIRM ORDER</button>
+                        <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg">CONFIRM ORDER</button>
                     </div>
-                </div>
-                <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10 text-center">
-                    <h3 class="font-bold text-indigo-400 mb-2">📢 Notice Board</h3>
-                    <p class="text-sm text-slate-500">Mehnat kar raha hai bacha, balance add karwane ke liye niche WhatsApp par proof bhein!</p>
                 </div>
             </div>
 
             <div id="section-add-funds" class="hidden text-center max-w-lg mx-auto glass p-10 rounded-[2.5rem]">
-                <h2 class="text-2xl font-black mb-2 text-indigo-400 underline">Add Balance</h2>
+                <h2 class="text-2xl font-black mb-2 text-indigo-400">Add Balance</h2>
                 <div class="bg-white p-4 inline-block rounded-2xl mb-8 mt-4">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9769073299@axl&pn=DeepakSMM" class="w-64 h-64">
                 </div>
-                <input id="utr-input" type="text" placeholder="Transaction ID (UTR)" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 outline-none text-center font-bold">
-                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">SUBMIT PAYMENT PROOF</button>
+                <input id="utr-input" type="text" placeholder="Transaction ID (UTR)" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4 text-center outline-none">
+                <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-bold">SUBMIT ON WHATSAPP</button>
             </div>
 
             <div id="section-history" class="hidden space-y-4">
-                <h2 class="text-xl font-bold mb-4 italic">My Order Records</h2>
+                <h2 class="text-xl font-bold mb-4 italic">Order History</h2>
                 <div id="history-list"></div>
-            </div>
-
-            <div id="section-support" class="hidden text-center glass p-8 rounded-3xl border border-indigo-500/20 max-w-2xl mx-auto">
-                <h2 class="text-2xl font-bold mb-4 text-indigo-400 italic">24/7 Support</h2>
-                <a href="https://wa.me/919250996142" target="_blank" class="inline-flex items-center gap-3 bg-green-600 px-8 py-4 rounded-2xl font-bold hover:scale-105 transition">
-                    <i class="fa-brands fa-whatsapp text-2xl"></i> Chat on WhatsApp
-                </a>
             </div>
         </div>
     </main>
 
     <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border border-slate-700">
-            <h2 class="text-3xl font-bold mb-6 italic text-indigo-400">Join Deepak SMM</h2>
-            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
-            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700">
-            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none border border-slate-700">
-            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register / Login</button>
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-slate-700 text-center">
+            <h2 class="text-3xl font-bold mb-6 text-indigo-400 italic">Deepak SMM</h2>
+            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
+            <input id="r-email" type="email" placeholder="Gmail" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
+            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none">
+            <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Login / Register</button>
         </div>
     </div>
 
     <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[101] hidden flex items-center justify-center p-6 text-center">
         <div class="glass p-8 rounded-3xl w-full max-w-md border-2 border-indigo-500">
-            <h2 class="text-2xl font-black text-indigo-400 mb-6 uppercase">Admin Panel</h2>
+            <h2 class="text-2xl font-black text-indigo-400 mb-6 uppercase">Admin Cloud</h2>
             <div class="space-y-4">
-                <input id="adm-email" type="email" placeholder="User Email" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
-                <input id="adm-amt" type="number" placeholder="Amount (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
+                <input id="adm-email" type="email" placeholder="User Gmail" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
+                <input id="adm-amt" type="number" placeholder="Balance to Add (₹)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
                 <button onclick="adminAdd()" class="w-full bg-indigo-600 py-3 rounded-xl font-bold">ADD BALANCE</button>
-                <button onclick="viewAllUsers()" class="w-full bg-yellow-600 py-3 rounded-xl font-bold text-black mt-2">📋 VIEW ALL USERS DATA</button>
-                <div id="user-list-display" class="mt-4 text-left text-[11px] max-h-40 overflow-y-auto hidden bg-black/50 p-3 rounded-lg border border-slate-700 text-yellow-500 font-mono"></div>
-                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Close</button>
+                <div class="h-[1px] bg-slate-700 my-2"></div>
+                <input id="adm-orderid" type="text" placeholder="Order ID (6 Digits)" class="w-full bg-slate-800 p-4 rounded-xl outline-none border border-slate-700">
+                <button onclick="adminStatusUpdate()" class="w-full bg-green-600 py-3 rounded-xl font-bold uppercase">Mark Completed</button>
+                <div class="h-[1px] bg-slate-700 my-2"></div>
+                <button onclick="viewAllUsers()" class="w-full bg-yellow-600 py-3 rounded-xl font-bold text-black uppercase">📋 View All Users</button>
+                <div id="user-list-display" class="mt-4 text-left text-[11px] max-h-40 overflow-y-auto hidden bg-black p-3 rounded-lg border border-slate-700 text-yellow-500"></div>
+                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="mt-4 text-slate-500">Close</button>
             </div>
         </div>
     </div>
 
-    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl hover:opacity-100 transition"><i class="fa-solid fa-gear"></i></div>
+    <div onclick="openAdmin()" class="fixed bottom-4 right-4 text-slate-800 cursor-pointer opacity-30 text-xl"><i class="fa-solid fa-gear"></i></div>
 
     <script>
-        // --- FIREBASE CONFIG (LIVE CONNECTION) ---
         const firebaseConfig = {
             apiKey: "AIzaSyB2_FEeqonZMSaoMnd_pjZNFLfBGir4_AE",
             authDomain: "deepaksmm-dc3ec.firebaseapp.com",
@@ -160,37 +145,69 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        let session = null;
+        let sessionData = null;
 
-        // Auth Logic
         async function registerUser() {
             const n = document.getElementById('r-name').value, e = document.getElementById('r-email').value, p = document.getElementById('r-pass').value;
-            if(!n || !e || !p) return alert("All fields required!");
-            const userKey = btoa(e).replace(/=/g, "");
-            const snapshot = await db.ref('users/' + userKey).once('value');
-            
+            if(!e || !p) return alert("All fields are required!");
+            const uKey = btoa(e).replace(/=/g, "");
+            const snapshot = await db.ref('users/' + uKey).once('value');
             if(snapshot.exists()) {
                 if(snapshot.val().pass === p) {
-                    localStorage.setItem('deepak_session_email', e);
+                    localStorage.setItem('deepak_user_email', e);
                     location.reload();
                 } else { alert("Wrong Password!"); }
             } else {
-                const u = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
-                await db.ref('users/' + userKey).set(u);
-                localStorage.setItem('deepak_session_email', e);
+                const newUser = { name: n, email: e, pass: p, balance: 0.00, orders: [] };
+                await db.ref('users/' + uKey).set(newUser);
+                localStorage.setItem('deepak_user_email', e);
                 location.reload();
             }
         }
 
-        function logout() { localStorage.removeItem('deepak_session_email'); location.reload(); }
+        async function adminAdd() {
+            const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
+            const uKey = btoa(email).replace(/=/g, "");
+            const snap = await db.ref('users/' + uKey).once('value');
+            if(snap.exists()) {
+                const updatedBal = (snap.val().balance || 0) + amt;
+                await db.ref('users/' + uKey).update({ balance: updatedBal });
+                alert("Success! Balance Added.");
+                location.reload();
+            } else { alert("User Not Found!"); }
+        }
 
-        // Dashboard Logic
+        async function adminStatusUpdate() {
+            const email = document.getElementById('adm-email').value, oId = document.getElementById('adm-orderid').value;
+            const uKey = btoa(email).replace(/=/g, "");
+            const snap = await db.ref('users/' + uKey).once('value');
+            if(snap.exists()) {
+                let orders = snap.val().orders || [];
+                let found = false;
+                orders = orders.map(o => { if(o.id == oId) { o.status = "Completed"; found = true; } return o; });
+                if(found) {
+                    await db.ref('users/' + uKey).update({ orders: orders });
+                    alert("Order marked as Completed!");
+                    location.reload();
+                } else { alert("Order ID not found for this user!"); }
+            } else { alert("Email not found!"); }
+        }
+
+        async function viewAllUsers() {
+            const display = document.getElementById('user-list-display');
+            display.classList.toggle('hidden');
+            const snap = await db.ref('users').once('value');
+            const data = snap.val();
+            let html = "";
+            for(let key in data) { html += `👤 ${data[key].name} | 📧 ${data[key].email} | 💰 ₹${data[key].balance.toFixed(2)}<br>---<br>`; }
+            display.innerHTML = html || "No users.";
+        }
+
         function switchTab(t) {
             document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
             document.getElementById('section-' + t).classList.remove('hidden');
             document.querySelectorAll('[id^="tab-"]').forEach(b => { b.classList.remove('active-tab'); b.classList.add('text-slate-500'); });
             document.getElementById('tab-' + t).classList.add('active-tab');
-            document.getElementById('tab-' + t).classList.remove('text-slate-500');
         }
 
         function calcPrice() {
@@ -205,64 +222,39 @@
             const r = select.options[select.selectedIndex].dataset.rate;
             const qty = document.getElementById('srv-qty').value, url = document.getElementById('srv-url').value;
             const cost = (qty / 1000) * r;
-            if(!url) return alert("Please paste the link!");
-            if(session.balance >= cost) {
-                const orderId = Math.floor(100000 + Math.random() * 900000);
-                const newOrder = { id: orderId, srv: select.value, qty: qty, cost: cost.toFixed(2), status: 'Processing' };
-                let orders = session.orders || [];
-                orders.unshift(newOrder);
-                const userKey = btoa(session.email).replace(/=/g, "");
-                await db.ref('users/' + userKey).update({ balance: (session.balance - cost), orders: orders });
-                alert(`Order #${orderId} Placed!`);
-                window.open(`https://wa.me/919250996142?text=NewOrderID:${orderId}`, '_blank');
+            if(!url) return alert("Link missing!");
+            if(sessionData.balance >= cost) {
+                const oId = Math.floor(100000 + Math.random() * 900000);
+                const oData = { id: oId, srv: select.value, qty: qty, cost: cost.toFixed(2), status: 'Processing' };
+                let currentOrders = sessionData.orders || [];
+                currentOrders.unshift(oData);
+                await db.ref('users/' + btoa(sessionData.email).replace(/=/g, "")).update({ balance: sessionData.balance - cost, orders: currentOrders });
+                alert(`Order #${oId} Placed!`);
+                window.open(`https://wa.me/919250996142?text=NewOrderID:${oId}`, '_blank');
                 location.reload();
             } else { alert("Low Balance!"); switchTab('add-funds'); }
         }
 
-        // Admin Power
         function openAdmin() { if(prompt("Admin Password?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
-        
-        async function adminAdd() {
-            const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
-            const userKey = btoa(email).replace(/=/g, "");
-            const snapshot = await db.ref('users/' + userKey).once('value');
-            if(snapshot.exists()) {
-                const newBal = (snapshot.val().balance || 0) + amt;
-                await db.ref('users/' + userKey).update({ balance: newBal });
-                alert("Success! Balance Added.");
-                location.reload();
-            } else { alert("User Not Found!"); }
-        }
+        function logout() { localStorage.removeItem('deepak_user_email'); location.reload(); }
+        function whatsappPay() { window.open(`https://wa.me/919250996142?text=UTR:${document.getElementById('utr-input').value}`, '_blank'); }
 
-        async function viewAllUsers() {
-            const display = document.getElementById('user-list-display');
-            display.classList.toggle('hidden');
-            const snapshot = await db.ref('users').once('value');
-            const data = snapshot.val();
-            let html = "";
-            for(let key in data) { html += `👤 ${data[key].name} | 💰 ₹${data[key].balance}<br>📧 ${data[key].email}<br>---<br>`; }
-            display.innerHTML = html || "No users yet.";
-        }
-
-        function whatsappPay() { window.open(`https://wa.me/919250996142?text=PaymentProof:UTR:${document.getElementById('utr-input').value}`, '_blank'); }
-
-        // Start App
         async function init() {
-            const email = localStorage.getItem('deepak_session_email');
+            const email = localStorage.getItem('deepak_user_email');
             if(email) {
-                const userKey = btoa(email).replace(/=/g, "");
-                const snapshot = await db.ref('users/' + userKey).once('value');
+                const uKey = btoa(email).replace(/=/g, "");
+                const snapshot = await db.ref('users/' + uKey).once('value');
                 if(snapshot.exists()) {
-                    session = snapshot.val();
+                    sessionData = snapshot.val();
                     document.getElementById('home-view').classList.add('hidden');
                     document.getElementById('dash-view').classList.remove('hidden');
                     document.getElementById('user-info').classList.remove('hidden');
                     document.getElementById('news-bar').classList.remove('hidden');
-                    document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
-                    const ords = session.orders || [];
+                    document.getElementById('top-balance').innerText = "₹" + sessionData.balance.toFixed(2);
+                    const ords = sessionData.orders || [];
                     document.getElementById('history-list').innerHTML = ords.map(o => `
                         <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
-                            <div><p class="font-bold text-white text-sm">#${o.id} - ${o.srv}</p><p class="text-[10px] text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                            <div><p class="font-bold text-white text-sm">#${o.id} - ${o.srv}</p><p class="text-xs text-slate-500">Qty: ${o.qty} | ₹${o.cost}</p></div>
                             <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
                         </div>
                     `).join('') || "<p class='text-center py-10 text-slate-600'>No orders yet.</p>";
