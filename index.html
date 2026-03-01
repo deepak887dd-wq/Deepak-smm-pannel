@@ -12,7 +12,6 @@
         .btn-grad { background: linear-gradient(90deg, #6366f1, #ec4899); transition: 0.3s; }
         .hidden { display: none !important; }
         .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
-        /* Animation for Order */
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         .processing { animation: pulse 1.5s infinite; color: #fbbf24; }
     </style>
@@ -43,9 +42,10 @@
 
         <div id="dash-view" class="hidden">
             <div class="flex gap-8 border-b border-slate-800 mb-8 overflow-x-auto">
-                <button onclick="switchTab('new-order')" id="tab-new-order" class="pb-4 active-tab">New Order</button>
-                <button onclick="switchTab('add-funds')" id="tab-add-funds" class="pb-4 text-slate-500 font-bold">Add Funds (QR)</button>
-                <button onclick="switchTab('history')" id="tab-history" class="pb-4 text-slate-500">My Orders</button>
+                <button onclick="switchTab('new-order')" id="tab-new-order" class="pb-4 active-tab whitespace-nowrap">New Order</button>
+                <button onclick="switchTab('add-funds')" id="tab-add-funds" class="pb-4 text-slate-500 font-bold whitespace-nowrap">Add Funds (QR)</button>
+                <button onclick="switchTab('history')" id="tab-history" class="pb-4 text-slate-500 whitespace-nowrap">My Orders</button>
+                <button onclick="switchTab('support')" id="tab-support" class="pb-4 text-slate-500 font-bold whitespace-nowrap text-indigo-400">Help & Support</button>
             </div>
 
             <div id="section-new-order" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -53,28 +53,34 @@
                     <h2 class="text-2xl font-bold mb-6 italic text-indigo-400">Place Order</h2>
                     <div class="space-y-4">
                         <select id="srv-select" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" onchange="calcPrice()">
-                            <optgroup label="INSTAGRAM">
-                                <option value="IG Followers" data-rate="45">Insta Followers (Premium) - ₹45/1k</option>
-                                <option value="IG Likes" data-rate="18">Insta Likes (Real) - ₹18/1k</option>
-                                <option value="IG Reels Views" data-rate="5">Insta Reels Views - ₹5/1k</option>
+                            <optgroup label="INSTAGRAM (High Quality)">
+                                <option value="IG Followers Premium" data-rate="55">Insta Followers (Non-Drop) - ₹55/1k</option>
+                                <option value="IG Likes Real" data-rate="18">Insta Likes (Real) - ₹18/1k</option>
+                                <option value="IG Reels Views" data-rate="8">Insta Reels Views (Fast) - ₹8/1k</option>
                             </optgroup>
-                            <optgroup label="YOUTUBE">
-                                <option value="YT Subs" data-rate="1450">YouTube Subscribers - ₹1450/1k</option>
-                                <option value="YT Watch" data-rate="1850">YouTube Watchtime - ₹1850/unit</option>
+                            <optgroup label="YOUTUBE (Best Rates)">
+                                <option value="YT Subs" data-rate="1470">YouTube Subscribers - ₹1470/1k</option>
+                                <option value="YT Watch" data-rate="1870">YouTube Watchtime - ₹1870/unit</option>
+                            </optgroup>
+                            <optgroup label="TELEGRAM">
+                                <option value="TG Members" data-rate="65">Telegram Members - ₹65/1k</option>
                             </optgroup>
                         </select>
                         <input id="srv-url" type="text" placeholder="Paste Link Here..." class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none">
                         <input id="srv-qty" type="number" value="1000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl outline-none" oninput="calcPrice()">
                         <div class="flex justify-between items-center bg-indigo-500/10 p-4 rounded-xl">
                             <span class="text-slate-400">Total Price:</span>
-                            <span id="final-cost" class="text-2xl font-black text-white">₹45.00</span>
+                            <span id="final-cost" class="text-2xl font-black text-white">₹55.00</span>
                         </div>
                         <button onclick="placeOrder()" class="w-full btn-grad py-4 rounded-xl font-black text-lg">CONFIRM ORDER</button>
                     </div>
                 </div>
-                <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10">
+                <div class="glass p-6 rounded-3xl h-fit border border-indigo-500/10 text-center">
                     <h3 class="font-bold text-indigo-400 mb-2">Live Status</h3>
-                    <p class="text-xs text-slate-500">Orders are processing normally. Current Speed: 10k/hr.</p>
+                    <p class="text-xs text-slate-500 mb-4">Orders are processing normally. Current Speed: 10k/hr.</p>
+                    <div class="bg-indigo-500/5 p-4 rounded-xl border border-indigo-500/10">
+                        <p class="text-[10px] text-indigo-300 italic uppercase">Pro Tip: Always use public profile links.</p>
+                    </div>
                 </div>
             </div>
 
@@ -87,12 +93,26 @@
                 <button onclick="whatsappPay()" class="w-full bg-green-600 py-4 rounded-xl font-black text-white">
                     <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> SUBMIT PROOF
                 </button>
-                <p class="text-[10px] text-slate-600 mt-4 underline cursor-pointer" onclick="switchTab('new-order')">Go Back to Dashboard</p>
             </div>
 
             <div id="section-history" class="hidden space-y-4">
                 <h2 class="text-xl font-bold mb-4">Your Recent Orders</h2>
                 <div id="history-list"></div>
+            </div>
+
+            <div id="section-support" class="hidden text-center glass p-8 rounded-3xl border border-indigo-500/20 max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold mb-4 italic text-indigo-400">Facing a Problem?</h2>
+                <p class="text-slate-400 mb-8 text-sm">Order cancel ho gaya ya balance add nahi hua? Niche click karke admin se baat karein.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="https://wa.me/919250996142?text=Hello Admin, I need help with my Deepak SMM account." target="_blank" class="flex items-center justify-center gap-3 bg-green-600/20 border border-green-500/50 p-5 rounded-2xl hover:bg-green-600/30 transition">
+                        <i class="fa-brands fa-whatsapp text-3xl text-green-500"></i>
+                        <div class="text-left"><p class="font-bold text-white">WhatsApp</p><p class="text-[10px] text-green-400">Direct Chat</p></div>
+                    </a>
+                    <div class="flex items-center justify-center gap-3 bg-indigo-600/20 border border-indigo-500/50 p-5 rounded-2xl">
+                        <i class="fa-solid fa-clock text-3xl text-indigo-400"></i>
+                        <div class="text-left"><p class="font-bold text-white">Reply Time</p><p class="text-[10px] text-indigo-300">10-30 Mins</p></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -100,9 +120,9 @@
     <div id="reg-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-6">
         <div class="glass p-8 rounded-3xl w-full max-w-md">
             <h2 class="text-3xl font-bold mb-6">Create Account</h2>
-            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
-            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none">
-            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none">
+            <input id="r-name" type="text" placeholder="Name" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700 focus:border-indigo-500">
+            <input id="r-email" type="email" placeholder="Email" class="w-full bg-slate-800 p-4 rounded-xl mb-4 outline-none border border-slate-700 focus:border-indigo-500">
+            <input id="r-pass" type="password" placeholder="Password" class="w-full bg-slate-800 p-4 rounded-xl mb-6 outline-none border border-slate-700 focus:border-indigo-500">
             <button onclick="registerUser()" class="w-full btn-grad py-4 rounded-xl font-bold">Register Now</button>
             <button onclick="document.getElementById('reg-modal').classList.add('hidden')" class="w-full mt-2 text-slate-500">Cancel</button>
         </div>
@@ -144,6 +164,7 @@
             document.getElementById('section-' + t).classList.remove('hidden');
             document.querySelectorAll('[id^="tab-"]').forEach(b => { b.classList.remove('active-tab'); b.classList.add('text-slate-500'); });
             document.getElementById('tab-' + t).classList.add('active-tab');
+            document.getElementById('tab-' + t).classList.remove('text-slate-500');
         }
 
         function calcPrice() {
@@ -156,36 +177,18 @@
             const r = document.getElementById('srv-select').options[document.getElementById('srv-select').selectedIndex].dataset.rate;
             const cost = (document.getElementById('srv-qty').value / 1000) * r;
             const url = document.getElementById('srv-url').value;
-            
             if(!url) return alert("Link kahan hai?");
             if(session.balance >= cost) {
                 session.balance -= cost;
-                const newOrder = { 
-                    id: Math.floor(Math.random()*99999),
-                    srv: document.getElementById('srv-select').value, 
-                    qty: document.getElementById('srv-qty').value, 
-                    cost: cost.toFixed(2), 
-                    status: 'Processing' 
-                };
+                const newOrder = { id: Math.floor(Math.random()*99999), srv: document.getElementById('srv-select').value, qty: document.getElementById('srv-qty').value, cost: cost.toFixed(2), status: 'Processing' };
                 session.orders.unshift(newOrder);
                 sync(); render(); 
-                
-                alert("Order Lag gaya! 2 minute mein followers badhne shuru ho jayenge.");
-                
-                // Fake Simulation Logic
-                setTimeout(() => {
-                    newOrder.status = "Completed";
-                    sync(); render();
-                }, 15000); // 15 seconds baad Completed ho jayega
-
-            } else { 
-                alert("Paise kam hain! QR Scan karke recharge karein."); 
-                switchTab('add-funds');
-            }
+                alert("Order Successfully Placed!");
+                setTimeout(() => { newOrder.status = "Completed"; sync(); render(); }, 15000);
+            } else { alert("Insufficient Balance! Scan QR to Recharge."); switchTab('add-funds'); }
         }
 
         function openAdmin() { if(prompt("Pass?") === "admin123") document.getElementById('admin-modal').classList.remove('hidden'); }
-        
         function adminAdd() {
             const email = document.getElementById('adm-email').value, amt = parseFloat(document.getElementById('adm-amt').value);
             let idx = users.findIndex(u => u.email === email);
@@ -193,24 +196,19 @@
                 users[idx].balance += amt;
                 localStorage.setItem('deepak_users', JSON.stringify(users));
                 if(session && session.email === email) { session.balance += amt; localStorage.setItem('deepak_session', JSON.stringify(session)); }
-                alert("Paisa Add ho gaya!"); render();
-            } else { alert("User nahi mila!"); }
+                alert("Balance Added!"); render();
+            } else { alert("User Not Found!"); }
         }
 
         function whatsappPay() {
             const utr = document.getElementById('utr-input').value;
-            if(!utr) return alert("UTR ID daaliye!");
+            if(!utr) return alert("Enter UTR/Transaction ID!");
             const phone = "919250996142";
-            const msg = `Payment Done!%0AEmail: ${session.email}%0AUTR: ${utr}`;
+            const msg = `Payment Proof - Deepak SMM%0AEmail: ${session.email}%0AUTR ID: ${utr}`;
             window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
         }
 
-        function sync() {
-            localStorage.setItem('deepak_session', JSON.stringify(session));
-            let i = users.findIndex(u => u.email === session.email);
-            users[i] = session;
-            localStorage.setItem('deepak_users', JSON.stringify(users));
-        }
+        function sync() { localStorage.setItem('deepak_session', JSON.stringify(session)); let i = users.findIndex(u => u.email === session.email); users[i] = session; localStorage.setItem('deepak_users', JSON.stringify(users)); }
 
         function render() {
             if(session) {
@@ -220,13 +218,13 @@
                 document.getElementById('top-balance').innerText = "₹" + session.balance.toFixed(2);
                 document.getElementById('history-list').innerHTML = session.orders.map(o => `
                     <div class="glass p-5 rounded-2xl flex justify-between items-center mb-3">
-                        <div><p class="font-bold text-white text-sm">${o.srv}</p><p class="text-[10px] text-slate-500 uppercase tracking-widest">Qty: ${o.qty} | ₹${o.cost}</p></div>
+                        <div><p class="font-bold text-white text-sm">${o.srv}</p><p class="text-[10px] text-slate-500 uppercase">Qty: ${o.qty} | ₹${o.cost}</p></div>
                         <span class="text-[10px] px-3 py-1 rounded-full font-bold uppercase ${o.status === 'Processing' ? 'processing bg-yellow-500/10' : 'bg-green-500/10 text-green-500'}">${o.status}</span>
                     </div>
-                `).join('') || "<p class='text-center py-20 text-slate-600'>No Orders Yet.</p>";
+                `).join('') || "<p class='text-center py-20 text-slate-600'>No Orders Found.</p>";
             }
         }
         render(); calcPrice();
     </script>
 </body>
-    </html>
+</html>
